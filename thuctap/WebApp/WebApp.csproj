@@ -71,6 +71,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin_ds_don_vi.aspx" />
+    <Content Include="admin_ds_nha_tram.aspx" />
     <Content Include="ckeditor\.htaccess" />
     <Content Include="ckeditor\CHANGES.md" />
     <Content Include="ckeditor\LICENSE.md" />
@@ -95,9 +97,11 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Css\home.min.css" />
     <Content Include="Css\image\background.jpg" />
+    <Content Include="Css\jquery.js" />
     <Content Include="Css\slide\cs-ctrl-basic.eot" />
     <Content Include="Css\slide\cs-ctrl-basic.ttf" />
     <Content Include="Css\slide\cs-ctrl-basic.woff" />
+    <Content Include="Css\main.js" />
     <Content Include="document\3a66ecfc-46a8-416d-a671-d6e8bb8cbf41_Ho_So.doc" />
     <Content Include="document\Ho_So.doc" />
     <Content Include="Exports\Files\HoaDon-1312201812315.pdf" />
@@ -1479,6 +1483,8 @@
     <Content Include="TrangChu.aspx" />
     <Content Include="usercontrol\admin_footer.ascx" />
     <Content Include="usercontrol\admin_menu.ascx" />
+    <Content Include="usercontrol\header.ascx" />
+    <Content Include="usercontrol\sidebar.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1498,6 +1504,20 @@
     </Compile>
     <Compile Include="admin_donvitinh.aspx.designer.cs">
       <DependentUpon>admin_donvitinh.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_ds_don_vi.aspx.cs">
+      <DependentUpon>admin_ds_don_vi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin_ds_don_vi.aspx.designer.cs">
+      <DependentUpon>admin_ds_don_vi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_ds_nha_tram.aspx.cs">
+      <DependentUpon>admin_ds_nha_tram.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin_ds_nha_tram.aspx.designer.cs">
+      <DependentUpon>admin_ds_nha_tram.aspx</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="convert.cs" />
@@ -1539,6 +1559,20 @@
     </Compile>
     <Compile Include="usercontrol\admin_menu.ascx.designer.cs">
       <DependentUpon>admin_menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="usercontrol\header.ascx.cs">
+      <DependentUpon>header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usercontrol\header.ascx.designer.cs">
+      <DependentUpon>header.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="usercontrol\sidebar.ascx.cs">
+      <DependentUpon>sidebar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usercontrol\sidebar.ascx.designer.cs">
+      <DependentUpon>sidebar.ascx</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>

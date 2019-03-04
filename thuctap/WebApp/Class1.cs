@@ -441,8 +441,26 @@ namespace MyNews
             return strBuilder.ToString();
         }
 
+        public DataTable Menu(string sql)
+        {
+            ConnectionString();
+            SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            close();
+            return dt;
+        }
 
 
-       
+        public void Insert(String sql)
+        {
+            ConnectionString();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.ExecuteNonQuery();
+            close();
+        }
+
+
+
     }
 }

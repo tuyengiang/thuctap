@@ -1,73 +1,36 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TrangChu.aspx.cs" Inherits="WebApp.TrangChu" %>
-
+<%@ Register Src="~/usercontrol/header.ascx" TagPrefix="uc4" TagName="header" %>
+<%@ Register Src="~/usercontrol/sidebar.ascx" TagPrefix="uc5" TagName="sidebar" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Trang chủ - Quản lý thiết bị viễn thông VNPT</title>
     <!--style-core-->
+    <meta name="Viewport" content="width=device-width,initial-scale=1" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.css" rel="stylesheet" />
     <link href="css/home.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Css/telerik/myControl.css" />
+    <link rel="stylesheet" href="/Css/telerik/ComboBox.Default.css" />
+    <link rel="stylesheet" href="/Css/telerik/DatePicker.Default.css" />
+    <link rel="stylesheet" href="/Css/telerik/Grid.Default.css" />
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-8">
-
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-4">
-                        <div id="loginInfo">
-                            <ul>
-                                <li>Xin chào: <a href="/">Tuyển Giảng</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--header-top-->
-        <header id="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-2">
-                       <div id="logo">
-                            <a href="/"><h2>VNPT TB</h2></a>
-                       </div>
-                    </div>
-                    <div class="col-md-8" id="header-center">
-                        <div class="header-menu">
-                            <ul>
-                                <li><a href="/"><i class="fa fa-home"></i> Trang chủ</a></li>
-                                <li><a href="/">Quản lý thiết bị</a></li>
-                                <li><a href="/">Quản lý danh mục <i class="fa fa-angle-down"></i></a>
-                                     <ul class="sub-menu">
-                                        <li><a href="#">Danh mục đơn vị</a></li>
-                                        <li><a href="#">Danh mục nhà trạm</a></li>
-                                        <li><a href="#">Danh mục loại thiết bị</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="/">Quản lý người dùng <i class="fa fa-angle-down"></i></a>
-                                     <ul class="sub-menu">
-                                        <li><a href="#">Thêm tài khoản mới</a></li>
-                                        <li><a href="#">Danh Sách tài khoản</a></li>
-                                    </ul>
-                                </li>                                
-                            </ul>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </header><!--header-->
+        <uc4:header ID="header" runat="server" />
         <main id="main">
             <div class="container">
-                <div class="col-xs-12 col-sm-12 col-md-4 sidebar-container">
-
-                </div><!--sidebar-container-->
-                <div class="col-xs-12 col-sm-12 col-md-8 main-container">
-
+                <uc5:sidebar ID="sidebar" runat="server" />
+                <div class="col-xs-12 col-sm-12 col-md-9 main-container">
+                    <div class="breadcrumb">
+                        <span>
+                            <a href="/"><i class="fa fa-home"></i> Trang Chủ</a>
+                            <i class="fa fa-angle-double-right"></i>
+                            <a href="/">Dashbroad</a>
+                        </span>
+                    </div>
                 </div><!--main-container-->
             </div>
         </main><!--main-->
