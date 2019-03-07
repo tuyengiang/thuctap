@@ -1,6 +1,3 @@
-/**FONTS*/
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 ul#css3menu1,ul#css3menu1 ul{
 	margin:0;
     list-style:none;
@@ -187,7 +184,7 @@ ul#css3menu1 li.toplast>a{
 		-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;padding-right: 0;width: 100% !important;}
 }
 @media screen and (max-width: 192px) {
-	ul#css3meu1 {
+	ul#css3menu1 {
 		width: 100%;}
 	ul#css3menu1 > li {
 		display: none;		position: relative;		width: 100% !important;}
@@ -199,11 +196,63 @@ ul#css3menu1 li.toplast>a{
 /*STYLE CUSSTOM*/
 body.ThucTap-body {
     width: 100%;
-    background-image: url(/css/image/background.jpg) !important;
+    background: url(/css/image/backgound.jpg) no-repeat 0px 0px !important;
     margin-top: 0px !important;
     overflow-x: hidden;
     background-position: center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
 }
 section#Dang-Nhap {
-    margin-top: 170px;
+    margin-top: 80px;
+}
+section#Dang-Nhap div#form-Login {
+    position: relative;
+}
+section#Dang-Nhap .panel-heading {
+    height: 60px;
+    line-height: 60px;
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    font-family: "Roboto",sans-serif;
+    font-weight: 700;
+}
+section#Dang-Nhap input#txtuser, section#Dang-Nhap input#txtpass {
+    width: 100%;
+    height: 40px;
+    margin: 25px 0;
+    border-radius: 0px !important;
+    padding: 13px;
+    padding-left: 48px;
+}
+section#Dang-Nhap input#btndangnhap {
+    width: 100%;
+    padding: 8px;
+    background: #009900;
+    border: 0px !important;
+    border-radius: 0px;
+    font-size: 19px;
+    font-family: "Roboto",sans-serif;
+}
+section#Dang-Nhap input#btndangnhap:hover{
+    background:#ef4d4d;
+}
+section#Dang-Nhap i#icon-user {
+    position: absolute;
+    z-index: 9999;
+    top: 0px;
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    background: #009900;
+    color: #fff;
+    text-align: center;
+}
+section#Dang-Nhap div#title-txt {
+    text-align: center;
+    font-size: 50px;
+    color: #fff;
+    font-family: "ROboto",sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
 }

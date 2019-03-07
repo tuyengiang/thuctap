@@ -1,0 +1,294 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteAdmin.Master.cs" Inherits="MyNews.SiteAdmin" %>
+<%@ Register Src="~/usercontrol/admin_menu.ascx" TagPrefix="uc2" TagName="menu" %>
+<%@ Register Src="~/usercontrol/admin_footer.ascx" TagPrefix="uc3" TagName="footer" %>
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc2" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Quản lý thiết bị</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/animate.min.css" rel="stylesheet" />
+    <link href="/css/prettyPhoto.css" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/responsive.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        #ContentPlaceHolder1 {
+            min-height: 450px;
+        }
+    </style>
+    <link rel="stylesheet" href="/Css/telerik/myControl.css" />
+    <link rel="stylesheet" href="/Css/telerik/ComboBox.Default.css" />
+    <link rel="stylesheet" href="/Css/telerik/DatePicker.Default.css" />
+    <link rel="stylesheet" href="/Css/telerik/Grid.Default.css" />
+</head>
+<body>
+    <form id="form1" runat="server" enctype="multipart/form-data">
+
+        <header id="header">
+
+            <div class="top-bar1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 cold-xs-12 text-left">
+                            <div class="company-name">
+                                <span class="title01 min-font1" style="text-align: left; text-transform: uppercase; font-weight: bold;">
+                                    QUẢN LÝ THIẾT BỊ
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 cold-xs-12">
+                            <ul class="menu_top">
+                              
+                                <li><a href="/admin_tonkho.aspx" ><i class="fa fa-bell" aria-hidden="true"></i>Sắp hết hạn <span class="badge">
+                                    <asp:Label ID="lblNotify" runat="server" Text="0"></asp:Label>
+                                </span>
+                                </a></li>
+                                <li><a href="/admin_tonkho.aspx" ><i class="fa fa-bell" aria-hidden="true"></i>Hết hạn <span class="badge">
+                                    <asp:Label ID="lblHetHan" runat="server" Text="0"></asp:Label>
+                                </span>
+                                </a></li>
+                               
+                                <li>
+
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <asp:Label ID="lblHoTen" runat="server" Text=""></asp:Label>
+
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" data-toggle="modal" data-target="#myModalUpdate" style="color: #444"><i class="fa fa-info-circle"></i>Thông tin tài khoản</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#myModalChange" style="color: #444"><i class="fa fa-key" aria-hidden="true"></i>Đổi mật khẩu</a></li>
+                                            <li>
+                                                <asp:LinkButton ID="btnLogout" OnClick="btnLogout_Click" ForeColor="#444" runat="server"><i class="fa fa-sign-out" aria-hidden="true"></i>  Thoát</asp:LinkButton>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <uc2:menu ID="menu1" runat="server" />
+
+        </header>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+        <uc3:footer ID="f1" runat="server" />
+        <!-- Modal ChangePass-->
+        <div id="myModalChange" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <div class="modal-content panel-primary">
+                    <div class="modal-header" style="background: #005395">
+                        <button type="button" style="color: #fff" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" style="color: #fff">Đổi mật khẩu</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                Mật khẩu cũ
+                            </div>
+                            <div class="col-md-9">
+                                <asp:TextBox ID="txtOldPass" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3">
+                                Mật khẩu mới
+                            </div>
+                            <div class="col-md-9">
+                                <asp:TextBox ID="txtNewPass" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9">
+                                <asp:LinkButton ID="btnChange" OnClick="btnChange_Click" CssClass="btn btn-success" runat="server"> <i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal Update-->
+        <div id="myModalUpdate" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <div class="modal-content panel-primary">
+                    <div class="modal-header" style="background: #005395">
+                        <button type="button" style="color: #fff" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" style="color: #fff">Cập nhật thông tin</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-3">
+                                Phòng:
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:Label ID="lblDonVi" runat="server" Text=""></asp:Label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-xs-3">
+                                Họ Tên
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:TextBox ID="txtName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-xs-3">
+                                Email
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:TextBox ID="txtEmail" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-xs-3">
+                                Điện thoại
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:TextBox ID="txtPhone" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-xs-3">
+                                Địa chỉ
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:TextBox ID="txtAddress" TextMode="MultiLine" Height="80px" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-xs-3">
+                                Ảnh đại diện :
+                            </div>
+                            <div class="col-md-9 col-xs-9">
+                                <asp:Image ID="imgAvatar" runat="server" Height="50px" />
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-lg-3" style="font-weight: bold"></div>
+                            <div class="col-md-6 col-lg-6">
+                                <asp:FileUpload ID="FileUpload1" runat="server" Width="220px" />
+
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <asp:CheckBox ID="CheckBox2" runat="server"
+                                    OnCheckedChanged="CheckBox2_CheckedChanged" Text="Thay đổi ảnh" />
+
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3 col-lg-3" style="font-weight: bold"></div>
+                            <div class="col-md-9 col-lg-9">
+                                <asp:Label ID="Label3" Visible="false" runat="server"></asp:Label>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 5px">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9">
+                                <asp:LinkButton ID="btnUpdate" OnClick="btnUpdate_Click" CssClass="btn btn-success" runat="server"> <i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal Notify-->
+        <div id="myModalNotify" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <div class="modal-content panel-primary">
+                    <div class="modal-header" style="background: #005395">
+                        <button type="button" style="color: #fff" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" style="color: #fff">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <table border="1" class="table table-bordered table-hover">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Nội dung</th>
+                                        <th>Ngày</th>
+                                    </tr>
+
+
+                                    <asp:Repeater ID="rptThongBao" runat="server">
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td>
+                                                    <%#Eval("stt") %>
+                                                </td>
+                                                <td>
+
+                                                    <a href="/admin_notify.aspx?loai=<%#Eval("loai") %>&id=<%#Eval("id") %>">
+                                                        <%#Eval("tieude") %>
+                                                    </a>
+
+                                                </td>
+                                                <td>
+                                                    <%#Eval("ngay") %>
+                                                </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center; padding-top: 10px">
+                                            <a href="/admin_main.aspx">Xem tất cả thông báo</a>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>

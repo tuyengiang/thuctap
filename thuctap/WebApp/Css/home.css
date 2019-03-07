@@ -1,0 +1,139 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+/**admin*/
+
+body{
+    font-family:"Roboto",sans-serif !important;
+}
+.content-wrapper {
+    background: #fff !important;
+}
+.navbar.default-layout .navbar-brand-wrapper .navbar-brand {
+    text-transform: uppercase;
+    font-weight: 700;
+    color:#ff3333 !important;
+}
+.navbar.default-layout .navbar-brand-wrapper .navbar-brand:hover{
+    color:#ff3333 !important;
+}
+a .navbar-brand.brand-logo, a.navbar-brand.brand-logo-mini {
+    color: #fff !important;
+    font-weight: 700;
+    font-family: "Roboto",sans-serif;
+    text-transform: uppercase;
+}
+
+.sidebar li.nav-item a span, .sidebar ul.nav.flex-column.sub-menu li a {
+    font-family: "Roboto",sans-serif !important;
+    color: #000 !important;
+    font-size: 15px !important;
+}
+.sidebar .nav .nav-item.nav-profile .nav-link .user-wrapper .profile-image img {
+    border-radius: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+nav#sidebar {
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.1);
+}
+.sidebar .nav .nav-item .nav-link:hover {
+    color: #3d3d3d;
+    background: rgba(255,255,255,0.1) !important;
+}
+.sidebar .nav .nav-item .nav-link i.menu-arrow:before {
+    content: "\F142";
+    font-family: "Material Design Icons";
+    font-size: 18px;
+    line-height: 1;
+    font-style: normal;
+    vertical-align: middle;
+}
+.sidebar  span#menu_username {
+    color: #000;
+    font-family: "Roboto",sans-serif;
+    font-size: 15px;
+}
+.sidebar .nav.sub-menu {
+    margin-bottom: 0;
+    padding: 0 0 0 2rem !important;
+}
+.sidebar li.nav-item.active i {
+    color: #979797 !important;
+}
+.text-center.navbar-brand-wrapper.d-flex.align-items-top.justify-content-center {
+    border-bottom: 1px solid #ddd;
+}
+
+/**beadcrum*/
+.content-wrapper .breadcrumb {
+    background: #f2f2f2;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 0px !important;
+    padding-top: 0px;
+}
+.content-wrapper .breadcrumb a {
+    padding-right: 10px;
+    color: #5983e8;
+    font-size: 15px;
+    text-decoration: none;
+}
+.content-wrapper .breadcrumb i {
+    line-height: 40px;
+    padding-right: 10px;
+}
+/**modal*/
+.modal-content {
+    background: #fff !important;
+}
+.modal-content .modal-header {
+    background: linear-gradient(120deg, #00e4d0, #5983e8) !important;
+    border: 0px !important;
+    border-bottom: 0px !important;
+}
+.modal-content .modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    right: 15px !important;
+    position: absolute;
+}
+.modal-content .modal-header h4{
+    color:#fff !important;
+    font-size:18px;
+    font-family:"Roboto",sans-serif;
+}
+.modal-content .table th, .modal-content .table td {
+    padding: 5px 0px !important;
+    vertical-align: top;
+    border-top: 0px !important;
+    line-height: 3 !important;
+}
+.modal-content .modal-footer {
+    padding: 5px !important;
+}
+.table-responsive {
+    margin: 40px 0 20px 0;
+}
+.table-responsive table#example td  {
+    background: #fff !important;
+    font-size:14px;
+    border-top: 0px !important;
+}
+.table-responsive table#example {
+    border: 1px solid #ddd;
+}
+.table-responsive table#example thead{
+    background:#009000;
+    color:#fff;
+}
+.table-responsive table#example .btn i:before {
+    padding-left: 5px;
+}
+div.table-responsive > div.dataTables_wrapper > div.row {
+    margin: 0;
+    width: 100%;
+}
+.form-inline label {
+   display:unset !important;
+}

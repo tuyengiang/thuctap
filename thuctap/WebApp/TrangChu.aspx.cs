@@ -7,11 +7,15 @@ using System.Web.UI.WebControls;
 
 namespace WebApp
 {
-    public partial class TrangChu : System.Web.UI.Page
+    public partial class Trangchu : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected void btnChange_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

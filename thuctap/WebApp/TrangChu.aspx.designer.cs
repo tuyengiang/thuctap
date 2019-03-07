@@ -10,7 +10,7 @@
 namespace WebApp {
     
     
-    public partial class TrangChu {
+    public partial class Trangchu {
         
         /// <summary>
         /// form1 control.
@@ -20,23 +20,5 @@ namespace WebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// header control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApp.usercontrol.header header;
-        
-        /// <summary>
-        /// sidebar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApp.usercontrol.sidebar sidebar;
     }
 }

@@ -33,29 +33,37 @@ namespace MyNews.Admin
 
         protected void btndangnhap_Click(object sender, EventArgs e)
         {
-            // Loại bỏ ký tự đặc biệt
                 username = txtuser.Text.Trim().Replace("'", "''").Replace("or", ".").Replace(">", ".").Replace("<", ".").Replace("=", ".");
                 pass = txtpass.Text.Trim().Replace("'", "''").Replace("or", ".").Replace(">", ".").Replace("<", ".").Replace("=", ".");
                 string pass1 = db.MD5Hash(pass);
-                // string sql = "select * from user where username = '"+ username +"' and  password = '"+ pass1 +"'"
-                //DataTable dt = db.bindDataTable(sql);
+                string sql = "select * from Account where name_user = '" + username + "' and  matkhau = '" + pass1 + "'";
+                DataTable dt = db.bindDataTable(sql);
 
                 //DataTable dt = db.ExecuteSelectProcedure("SelectAdmin", new object[] { username, pass1 });
-                //if (dt.Rows.Count > 0)
-                //{
+                if (string.IsNullOrEmpty(username))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "alert('Chưa nhập tên đăng nhập !');", true);
 
-                //    Response.Redirect("~/admin_donvitinh.aspx");
-                //}
-                //else
-                //{
-                   
-                //    lblThongBao.Text = "Đăng nhập không thành công !";
-                //    txtuser.Focus();
-                //    return;
+                }
+                else if (string.IsNullOrEmpty(pass))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "alert('Chưa nhập mật khẩu !');", true);
+                }
+                else
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        Session["username"] = username;
+                        Response.Redirect("~/Trangchu.aspx");
+                    }
+                    else
+                    {
 
-                //}
-
-                Response.Redirect("~/TrangChu.aspx");
+                        lblThongBao.Text = "Đăng nhập không thành công !";
+                        txtuser.Focus();
+                        return;
+                    }
+                }
         }
 
     }
