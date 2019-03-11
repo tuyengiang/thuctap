@@ -12,7 +12,7 @@
                         <asp:Label ID="username" runat="server" Text="Label"></asp:Label>
                     </p>
                   <div>
-                    <small class="designation text-muted">Online</small>
+                    <small class="designation text-muted">Đang hoạt động</small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>
@@ -28,7 +28,7 @@
              <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-basic">
                   <i class="menu-icon fa fa-thumb-tack"></i>
-                  <span class="menu-title">Bài viết</span>
+                  <span class="menu-title">Quản lý thông báo</span>
                   <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-post">
@@ -60,16 +60,16 @@
                   <a class="nav-link" href="/admin_ds_don_vi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục đơn vị</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục nhà trạm</a>
+                  <a class="nav-link" href="/Admin/admin_loai_thietbi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục nhà trạm</a>
                 </li>
                  <li class="nav-item">
-                  <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục loại thiết bị</a>
+                  <a class="nav-link" href="/Admin/admin_loai_thietbi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục loại thiết bị</a>
                 </li>
               </ul>
             </div>
           </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-user">
               <i class="menu-icon fa fa-cog"></i>
               <span class="menu-title">Quản lý người dùng</span>
               <i class="menu-arrow"></i>
@@ -83,7 +83,7 @@
                   <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Nhóm phân quyền</a>
                 </li>
                  <li class="nav-item">
-                  <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh sách tài khoản</a>
+                  <a class="nav-link" href="/Admin/admin_add_Account.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh sách tài khoản</a>
                 </li>
               </ul>
             </div>

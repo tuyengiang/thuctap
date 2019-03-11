@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
+
 namespace MyNews
 {
     public  class Class1
@@ -81,7 +82,6 @@ namespace MyNews
             return strBuilder.ToString();
         }
 
-        
-
+       
     }
 }

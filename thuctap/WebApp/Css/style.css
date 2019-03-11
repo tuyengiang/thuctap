@@ -206,7 +206,7 @@ body.ThucTap-body {
 section#Dang-Nhap {
     margin-top: 80px;
 }
-section#Dang-Nhap div#form-Login {
+section#Dang-Nhap .form-Login {
     position: relative;
 }
 section#Dang-Nhap .panel-heading {
@@ -228,7 +228,7 @@ section#Dang-Nhap input#txtuser, section#Dang-Nhap input#txtpass {
 section#Dang-Nhap input#btndangnhap {
     width: 100%;
     padding: 8px;
-    background: #009900;
+    background: #dc2430;
     border: 0px !important;
     border-radius: 0px;
     font-size: 19px;
@@ -244,7 +244,7 @@ section#Dang-Nhap i#icon-user {
     height: 40px;
     line-height: 40px;
     width: 40px;
-    background: #009900;
+    background: #dc2430;
     color: #fff;
     text-align: center;
 }

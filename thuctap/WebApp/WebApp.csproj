@@ -71,6 +71,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\admin_add_Account.aspx" />
+    <Content Include="Admin\admin_loai_thietbi.aspx" />
     <Content Include="admin_ds_don_vi.aspx" />
     <Content Include="ckeditor\.htaccess" />
     <Content Include="ckeditor\CHANGES.md" />
@@ -1899,8 +1901,10 @@
     <Content Include="Css\admin\vendors\tinymce\tinymce.jquery.min.js" />
     <Content Include="Css\admin\vendors\tinymce\tinymce.js" />
     <Content Include="Css\admin\vendors\tinymce\tinymce.min.js" />
+    <Content Include="Css\angular.min.js" />
     <Content Include="Css\home.css" />
     <Content Include="Css\image\backgound.jpg" />
+    <Content Include="Css\image\search-icon.png" />
     <Content Include="Css\jquery.js" />
     <Content Include="Css\slide\cs-ctrl-basic.eot" />
     <Content Include="Css\slide\cs-ctrl-basic.ttf" />
@@ -1914,6 +1918,10 @@
     <Content Include="fckeditor\fckeditor.php" />
     <Content Include="fckeditor\fckeditor.pl" />
     <Content Include="fckeditor\fckutils.cfm" />
+    <Content Include="fonts\awesome\css\font-awesome.css" />
+    <Content Include="fonts\awesome\css\font-awesome.min.css" />
+    <Content Include="fonts\awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\awesome\HELP-US-OUT.txt" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -1932,6 +1940,8 @@
     <Content Include="Global.asax" />
     <Content Include="Images\user\default.jpg" />
     <Content Include="Images\user\user.jpg" />
+    <Content Include="js\notify.js" />
+    <Content Include="js\notify.min.js" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\MyNews.csprojResolveAssemblyReference.cache" />
@@ -2055,6 +2065,39 @@
     <Content Include="Css\admin\css\maps\style.css.map" />
     <Content Include="Css\admin\images\.DS_Store" />
     <Content Include="Css\admin\images\faces\.DS_Store" />
+    <Content Include="fonts\awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\awesome\fonts\FontAwesome.otf" />
+    <Content Include="fonts\awesome\less\animated.less" />
+    <Content Include="fonts\awesome\less\bordered-pulled.less" />
+    <Content Include="fonts\awesome\less\core.less" />
+    <Content Include="fonts\awesome\less\fixed-width.less" />
+    <Content Include="fonts\awesome\less\font-awesome.less" />
+    <Content Include="fonts\awesome\less\icons.less" />
+    <Content Include="fonts\awesome\less\larger.less" />
+    <Content Include="fonts\awesome\less\list.less" />
+    <Content Include="fonts\awesome\less\mixins.less" />
+    <Content Include="fonts\awesome\less\path.less" />
+    <Content Include="fonts\awesome\less\rotated-flipped.less" />
+    <Content Include="fonts\awesome\less\screen-reader.less" />
+    <Content Include="fonts\awesome\less\stacked.less" />
+    <Content Include="fonts\awesome\less\variables.less" />
+    <Content Include="fonts\awesome\scss\font-awesome.scss" />
+    <Content Include="fonts\awesome\scss\_animated.scss" />
+    <Content Include="fonts\awesome\scss\_bordered-pulled.scss" />
+    <Content Include="fonts\awesome\scss\_core.scss" />
+    <Content Include="fonts\awesome\scss\_fixed-width.scss" />
+    <Content Include="fonts\awesome\scss\_icons.scss" />
+    <Content Include="fonts\awesome\scss\_larger.scss" />
+    <Content Include="fonts\awesome\scss\_list.scss" />
+    <Content Include="fonts\awesome\scss\_mixins.scss" />
+    <Content Include="fonts\awesome\scss\_path.scss" />
+    <Content Include="fonts\awesome\scss\_rotated-flipped.scss" />
+    <Content Include="fonts\awesome\scss\_screen-reader.scss" />
+    <Content Include="fonts\awesome\scss\_stacked.scss" />
+    <Content Include="fonts\awesome\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3331,6 +3374,20 @@
     <Content Include="SiteAdmin.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\admin_add_Account.aspx.cs">
+      <DependentUpon>admin_add_Account.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_add_Account.aspx.designer.cs">
+      <DependentUpon>admin_add_Account.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_loai_thietbi.aspx.cs">
+      <DependentUpon>admin_loai_thietbi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_loai_thietbi.aspx.designer.cs">
+      <DependentUpon>admin_loai_thietbi.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin_donvitinh.aspx.cs">
       <DependentUpon>admin_donvitinh.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3345,7 +3402,11 @@
     <Compile Include="admin_ds_don_vi.aspx.designer.cs">
       <DependentUpon>admin_ds_don_vi.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BUS\BUS_DV.cs" />
+    <Compile Include="BUS\BUS_LTB.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DAL\DAL_DV.cs" />
+    <Compile Include="DAL\DAL_LTB.cs" />
     <Compile Include="DangNhap.aspx.cs">
       <DependentUpon>DangNhap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3353,6 +3414,8 @@
     <Compile Include="DangNhap.aspx.designer.cs">
       <DependentUpon>DangNhap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DTO\DTO_DV.cs" />
+    <Compile Include="DTO\DTO_LTB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
