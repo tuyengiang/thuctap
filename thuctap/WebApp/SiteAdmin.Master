@@ -24,6 +24,7 @@
     <!-- plugins:js -->
   <script src="../css/jquery.js"></script>
   <script src="../css/bootstrap.min.js"></script>
+  <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
   <script src="../css/admin/vendors/js/vendor.bundle.base.js"></script>
   <script src="../css/admin/vendors/js/vendor.bundle.addons.js"></script>
   <script src="../css/admin/js/off-canvas.js"></script>
@@ -33,6 +34,7 @@
   <script type="text/javascript" src="../css/admin/table/dataTables.bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
   <script type="text/javascript" src="../css/admin/table/dataTables.bootstrap.min.js"></script>
+   <script src="../css/main.js"></script>
    <script type="text/javascript" src="../css/angular.min.js"></script>
   <script type="text/javascript">
         $(document).ready(function () {
@@ -46,7 +48,23 @@
         function openModalAddDelete() {
             $('#myMoDelete').modal({ backdrop: 'static', keyboard: false })
             $('#myMoDelete').modal('show');
-        }
+      }
+      function openModalAddKhoa() {
+            $('#myMoKhoa').modal({ backdrop: 'static', keyboard: false })
+            $('#myMoKhoa').modal('show');
+      }
+      function openModalAddView() {
+            $('#myMoView').modal({ backdrop: 'static', keyboard: false })
+            $('#myMoView').modal('show');
+      }
+     function openModalAddSetting() {
+                $('#myMoSetting').modal({ backdrop: 'static', keyboard: false })
+                $('#myMoSetting').modal('show');
+      }
+      var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+      };
     </script>
 </head>
 

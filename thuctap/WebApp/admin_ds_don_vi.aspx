@@ -4,7 +4,7 @@
             <title>VNPT - Quản lý danh sách đơn vị</title>
 </asp:Content>
 <asp:Content ID="don_vi_2" ContentPlaceHolderID="MainContent" runat="server">
-     <form runat="server" id="form_dv">
+     <form runat="server" id="myform" name="registration">
           <div class="row">
                 <div class="breadcrumb">
                     <a href="/Trangchu.aspx"><i class="fa fa-home"></i> Trang chủ</a>
@@ -19,8 +19,8 @@
                       <div class="form-group">
                           <asp:DropDownList ID="SelectItem" runat="server" CssClass="form-control">
                               <asp:ListItem Text="-- Tìm kiếm theo --" Value="true"></asp:ListItem>
-                              <asp:ListItem Text="Mã thiết bị" Value="true"></asp:ListItem>
-                              <asp:ListItem Text="Tên thiết bị" Value="false"></asp:ListItem>
+                              <asp:ListItem Text="Mã đơn vị" Value="ma_donvi"></asp:ListItem>
+                              <asp:ListItem Text="Tên thiết bị" Value="ten_thietbi"></asp:ListItem>
                               <asp:ListItem Text="Địa chỉ" Value="false"></asp:ListItem>
                            </asp:DropDownList>
                       </div>
@@ -28,13 +28,13 @@
                   <div class="col-md-6 col-xs-12 col-sm-12">
                      <div class="form-group" id="form__search">
                           <asp:TextBox ID="txt_search" runat="server" placeholder="Nhập từ khóa tìm kiếm" CssClass="form-control"></asp:TextBox>
-                         <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-success"><i class="fa fa-search"></i></asp:LinkButton>
+                         <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-success" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton>
                      </div>
                   </div>
               </div><!--search-->
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand">
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnSelectedIndexChanging="example_SelectedIndexChanging" PageSize="8">
                      <Columns>
                          <asp:BoundField DataField="ma_donvi" HeaderText="Mã đơn vị" SortExpression="ma_donvi" />
                          <asp:BoundField DataField="ten_donvi" HeaderText="Tên đơn vị" SortExpression="ten_donvi" />
@@ -66,6 +66,7 @@
                                     <td>Mã đơn bị <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_madv" runat="server" CssClass="form-control text-input" placeholder="Nhập mã đơn vị"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Mã đơn vị không được bỏ trống" ControlToValidate="txt_madv" Visible="False"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
@@ -83,7 +84,7 @@
                                 <tr>
                                     <td>Mô tả</td>
                                     <td>
-                                        <asp:TextBox ID="txt_mota" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                        <asp:TextBox ID="txt_mota" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
                                     </td>
                                 </tr>
                             </table>
@@ -128,7 +129,7 @@
                                             <tr>
                                                 <td>Mô tả</td>
                                                 <td>
-                                                    <asp:TextBox ID="txt_mota_edit" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                                    <asp:TextBox ID="txt_mota_edit" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
                                                 </td>
                                             </tr>
                                         </table>

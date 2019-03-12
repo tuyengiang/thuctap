@@ -26,6 +26,16 @@ namespace WebApp
             example.DataBind();
 
         }
+
+        public void SearchMenu()
+        {
+            string ma = txt_search.Text;
+            string cbx = SelectItem.SelectedValue;
+            string querry = string.Format("SELECT * FROM dbo.don_vi WHERE {0} like N'%{1}%'", cbx, ma);
+            DataView dv = new DataView(db.bindDataTable(querry));
+            example.DataSource = dv;
+            example.DataBind();
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             hienthi();
@@ -147,6 +157,22 @@ namespace WebApp
             txt_tendv.Text = "";
             txt_diachi.Text = "";
             txt_mota.Text = "";
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchMenu();
+        }
+
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        }
+
+        protected void example_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        {
+           
         }
     }
 }

@@ -26,7 +26,7 @@
             </a>
             </li>
              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-basic">
+                <a class="nav-link" data-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-post">
                   <i class="menu-icon fa fa-thumb-tack"></i>
                   <span class="menu-title">Quản lý thông báo</span>
                   <i class="menu-arrow"></i>
@@ -43,7 +43,7 @@
                 </div>
           </li>
            <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="/Trangchu.aspx" aria-expanded="false" >
+            <a class="nav-link"  href="/Admin/admin_ds_TB.aspx" aria-expanded="false" >
               <i class="menu-icon fa fa-laptop"></i>
               <span class="menu-title">Quản lý thiết bị</span>
             </a>
@@ -60,7 +60,7 @@
                   <a class="nav-link" href="/admin_ds_don_vi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục đơn vị</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/Admin/admin_loai_thietbi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục nhà trạm</a>
+                  <a class="nav-link" href="/Admin/admin_ds_nhatram.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục nhà trạm</a>
                 </li>
                  <li class="nav-item">
                   <a class="nav-link" href="/Admin/admin_loai_thietbi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục loại thiết bị</a>
@@ -77,7 +77,7 @@
             <div class="collapse" id="ui-user">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item">
-                  <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thông tin tài khoản</a>
+                  <a class="nav-link" href="/Admin/admin_profile.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thông tin tài khoản</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Nhóm phân quyền</a>

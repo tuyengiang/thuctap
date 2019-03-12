@@ -51,17 +51,31 @@ namespace MyNews.Admin
                 }
                 else
                 {
-                    if (dt.Rows.Count > 0)
+                    String khoa = "";
+                    String xoa = "";
+                   foreach(DataRow dt1 in db.bindDataTable(sql).Rows)
+                   {
+                        khoa = dt1["khoatk"].ToString();
+                       xoa = dt1["xoatk"].ToString();
+                   }
+                   if(khoa=="True" || xoa == "True")
                     {
-                        Session["username"] = username;
-                        Response.Redirect("~/Trangchu.aspx");
-                    }
+                        lblThongBao.Text = "Tài khoản đã bị vô hiệu hóa !";
+                    }   
                     else
                     {
+                        if (dt.Rows.Count > 0)
+                        {
+                            Session["username"] = username;
+                            Response.Redirect("~/Trangchu.aspx");
+                        }
+                        else
+                        {
 
-                        lblThongBao.Text = "Đăng nhập không thành công !";
-                        txtuser.Focus();
-                        return;
+                            lblThongBao.Text = "Đăng nhập không thành công !";
+                            txtuser.Focus();
+                            return;
+                        }
                     }
                 }
         }

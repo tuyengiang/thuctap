@@ -72,7 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\admin_add_Account.aspx" />
+    <Content Include="Admin\admin_ds_nhatram.aspx" />
+    <Content Include="Admin\admin_ds_remove_account.aspx" />
+    <Content Include="Admin\admin_ds_TB.aspx" />
     <Content Include="Admin\admin_loai_thietbi.aspx" />
+    <Content Include="Admin\admin_profile.aspx" />
     <Content Include="admin_ds_don_vi.aspx" />
     <Content Include="ckeditor\.htaccess" />
     <Content Include="ckeditor\CHANGES.md" />
@@ -1906,6 +1910,7 @@
     <Content Include="Css\image\backgound.jpg" />
     <Content Include="Css\image\search-icon.png" />
     <Content Include="Css\jquery.js" />
+    <Content Include="Css\main.js" />
     <Content Include="Css\slide\cs-ctrl-basic.eot" />
     <Content Include="Css\slide\cs-ctrl-basic.ttf" />
     <Content Include="Css\slide\cs-ctrl-basic.woff" />
@@ -3381,12 +3386,40 @@
     <Compile Include="Admin\admin_add_Account.aspx.designer.cs">
       <DependentUpon>admin_add_Account.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\admin_ds_nhatram.aspx.cs">
+      <DependentUpon>admin_ds_nhatram.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_ds_nhatram.aspx.designer.cs">
+      <DependentUpon>admin_ds_nhatram.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_ds_remove_account.aspx.cs">
+      <DependentUpon>admin_ds_remove_account.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_ds_remove_account.aspx.designer.cs">
+      <DependentUpon>admin_ds_remove_account.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_ds_TB.aspx.cs">
+      <DependentUpon>admin_ds_TB.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_ds_TB.aspx.designer.cs">
+      <DependentUpon>admin_ds_TB.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\admin_loai_thietbi.aspx.cs">
       <DependentUpon>admin_loai_thietbi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\admin_loai_thietbi.aspx.designer.cs">
       <DependentUpon>admin_loai_thietbi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_profile.aspx.cs">
+      <DependentUpon>admin_profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_profile.aspx.designer.cs">
+      <DependentUpon>admin_profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin_donvitinh.aspx.cs">
       <DependentUpon>admin_donvitinh.aspx</DependentUpon>
@@ -3402,11 +3435,17 @@
     <Compile Include="admin_ds_don_vi.aspx.designer.cs">
       <DependentUpon>admin_ds_don_vi.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BUS\BUS_AD.cs" />
     <Compile Include="BUS\BUS_DV.cs" />
     <Compile Include="BUS\BUS_LTB.cs" />
+    <Compile Include="BUS\BUS_ThietB.cs" />
+    <Compile Include="BUS\BUS_TRAM.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DAL\DAL_AD.cs" />
     <Compile Include="DAL\DAL_DV.cs" />
     <Compile Include="DAL\DAL_LTB.cs" />
+    <Compile Include="DAL\DAL_ThietB.cs" />
+    <Compile Include="DAL\DAL_TRAM.cs" />
     <Compile Include="DangNhap.aspx.cs">
       <DependentUpon>DangNhap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3414,8 +3453,11 @@
     <Compile Include="DangNhap.aspx.designer.cs">
       <DependentUpon>DangNhap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DTO\DTO_AD.cs" />
     <Compile Include="DTO\DTO_DV.cs" />
     <Compile Include="DTO\DTO_LTB.cs" />
+    <Compile Include="DTO\DTO_ThietB.cs" />
+    <Compile Include="DTO\DTO_TRAM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -272,9 +272,34 @@ div#form__search a#MainContent_btnSearch {
     background: #f2f8f9;
     padding: 10px 1rem !important;
 }
-    /**MOBILE*/
+img#output {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+/**profile*/
+
+.avatar-user-profile {
+    width: 200px;
+    height: 200px;
+}
+
+.avatar-user-profile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+p.title {
+    font-size: 17px;
+    font-family: "Roboto",sans-serif;
+    font-weight: 700;
+    margin-top: 20px;
+}
+/**MOBILE*/
 @media only screen and (max-width:900px) {
-     div#form__search {
+    div #form__search {
        margin-top: 10px;
      }
 }

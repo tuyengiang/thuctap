@@ -90,7 +90,7 @@
                   </div>
                 </div>
               </a>
-              <a class="dropdown-item mt-2">
+              <a href="/Admin/admin_profile.aspx" class="dropdown-item mt-2">
                Thông tin tài khoản
               </a>
               <a class="dropdown-item">

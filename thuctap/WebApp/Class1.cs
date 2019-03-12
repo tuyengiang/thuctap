@@ -81,7 +81,98 @@ namespace MyNews
 
             return strBuilder.ToString();
         }
+        // resize image
+        public static System.Drawing.Image ScaleImage(System.Drawing.Image image, int maxHeight)
+        {
+            var ratio = (double)maxHeight / image.Height;
 
-       
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+            newImage.SetResolution(72, 72);
+            using (var g = Graphics.FromImage(newImage))
+            {
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
+        }
+        // resize image
+        public static System.Drawing.Image ScaleImageW(System.Drawing.Image image, int maxWidth)
+        {
+
+            if (maxWidth < image.Width)
+            {
+                var ratio = (double)maxWidth / image.Width;
+
+                var newWidth = (int)(image.Width * ratio);
+                var newHeight = (int)(image.Height * ratio);
+                var newImage = new Bitmap(newWidth, newHeight);
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    g.DrawImage(image, 0, 0, newWidth, newHeight);
+                }
+                return newImage;
+            }
+            else
+                return image;
+        }
+        //
+        public void ResizeImage(string FileName, string fileExtention, int fileLenght, int maxWidth, Bitmap bmpPostedImage, string SaveLocation)
+        {
+            try
+            {
+                if (fileExtention == "image/png" || fileExtention == "image/jpeg" || fileExtention == "image/x-png" || fileExtention == "image/jpg" || fileExtention == "image/gif")
+                {
+                    System.Drawing.Image objImage = ScaleImageW(bmpPostedImage, maxWidth);
+                    objImage.Save(SaveLocation, ImageFormat.Jpeg);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        //
+        public void ResizeImageH(string FileName, string fileExtention, int fileLenght, int maxHeight, Bitmap bmpPostedImage, string SaveLocation)
+        {
+            try
+            {
+                if (fileExtention == "image/png" || fileExtention == "image/jpeg" || fileExtention == "image/x-png" || fileExtention == "image/jpg" || fileExtention == "image/gif")
+                {
+                    System.Drawing.Image objImage = ScaleImage(bmpPostedImage, maxHeight);
+
+                    objImage.Save(SaveLocation, ImageFormat.Jpeg);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public bool ExcuteQuery_TRAM(String name, string ma,string ten,string dc,string mt,int id)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(conn);
+                SqlCommand command = new SqlCommand(name, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@ma_tran", ma));
+                command.Parameters.Add(new SqlParameter("@ten_tram", ten));
+                command.Parameters.Add(new SqlParameter("@dia_chi",dc));
+                command.Parameters.Add(new SqlParameter("@mo_ta", mt));
+                command.Parameters.Add(new SqlParameter("@id_donvi", id));
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+                connection.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
     }
 }

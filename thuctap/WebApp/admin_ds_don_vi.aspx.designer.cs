@@ -13,13 +13,13 @@ namespace WebApp {
     public partial class admin_ds_don_vi {
         
         /// <summary>
-        /// form_dv control.
+        /// myform control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form_dv;
+        protected global::System.Web.UI.HtmlControls.HtmlForm myform;
         
         /// <summary>
         /// SelectItem control.
@@ -65,6 +65,15 @@ namespace WebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_madv;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// txt_tendv control.

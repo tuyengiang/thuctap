@@ -86,7 +86,7 @@
                                 <tr>
                                     <td>Mô tả</td>
                                     <td>
-                                        <asp:TextBox ID="txt_mota" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                        <asp:TextBox ID="txt_mota" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
                                     </td>
                                 </tr>
                             </table>
@@ -134,7 +134,7 @@
                                             <tr>
                                                 <td>Mô tả</td>
                                                 <td>
-                                                    <asp:TextBox ID="txt_mota_edit" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                                    <asp:TextBox ID="txt_mota_edit" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
                                                 </td>
                                             </tr>
                                         </table>
