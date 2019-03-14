@@ -297,9 +297,60 @@ p.title {
     font-weight: 700;
     margin-top: 20px;
 }
+
 /**MOBILE*/
 @media only screen and (max-width:900px) {
     div #form__search {
        margin-top: 10px;
      }
+}
+
+#MainContent_example_wrapper .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -12.5px;
+    margin-left: -12.5px;
+    width: 100% !important;
+    margin-right: 0px !important;
+    padding-right: 0px !important;
+}
+div#MainContent_example_wrapper {
+    margin: 20px 0 0 0;
+}
+#MainContent_example_wrapper .col-sm-12, #MainContent_example_wrapper .col-sm-6 {
+    padding-right: 0px !important;
+}
+table#MainContent_example thead {
+    background: linear-gradient(to right, #dc2430, #7b4397) !important;
+    color: #fff;
+    height: 54px !important;
+    border: 1px solid #ddd !important;
+}
+div#MainContent_example_paginate ul li {
+    border: 1px solid #dc2430;
+    margin: 0 2px 0 2px;
+}
+div#MainContent_example_paginate ul li a {
+    color: #dc2430;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+textarea#MainContent_txt_content {
+    height: 400px;
+}
+textarea#MainContent_txt_content_edit {
+    height: 400px !important;
+}
+
+/**thongbao*/
+.tin-tuc {
+    padding-left: 0px !important;
+}
+.tin-tuc .title-bt {
+    background: #dc2430;
+    width: 100%;
+    padding: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Roboto",sans-serif;
 }

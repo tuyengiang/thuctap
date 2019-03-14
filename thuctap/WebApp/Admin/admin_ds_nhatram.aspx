@@ -14,27 +14,10 @@
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myMoAdd"><i class="fa fa-plus-circle"></i> Thêm mới nhà trạm</button>
                 <button type="submit" class="btn btn-default" style="margin-left:10px;" onclick="return confirm('Bạn có muốn load lại trang không?');"><i class="fa fa-refresh"></i> Tải lại trang</button>
           </div>
-          <div class="row" id="form">
-                  <div class="col-md-6 col-xs-4 col-sm-4">
-                      <div class="form-group">
-                          <asp:DropDownList ID="SelectItem" runat="server" CssClass="form-control">
-                              <asp:ListItem Text="-- Tìm kiếm theo --" Value="true"></asp:ListItem>
-                              <asp:ListItem Text="Mã thiết bị" Value="true"></asp:ListItem>
-                              <asp:ListItem Text="Tên thiết bị" Value="false"></asp:ListItem>
-                              <asp:ListItem Text="Địa chỉ" Value="false"></asp:ListItem>
-                           </asp:DropDownList>
-                      </div>
-                  </div>
-                  <div class="col-md-6 col-xs-12 col-sm-12">
-                     <div class="form-group" id="form__search">
-                          <asp:TextBox ID="txt_search" runat="server" placeholder="Nhập từ khóa tìm kiếm" CssClass="form-control" AutoPostBack="true" OnTextChanged="txt_search_TextChanged" ></asp:TextBox>
-                         <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-success"><i class="fa fa-search"></i></asp:LinkButton>
-                     </div>
-                  </div>
-          </div><!--search-->
+        
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" AllowPaging="True" PageSize="8" OnSelectedIndexChanging="example_SelectedIndexChanging">
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" AllowPaging="True" PageSize="8"  OnRowDataBound="example_RowDataBound">
                      <Columns>
                          <asp:BoundField DataField="ma_tran" HeaderText="Mã nhà trạm" SortExpression="ma_thietbi" />
                          <asp:BoundField DataField="ten_tram" HeaderText="Tên nhà trạm" SortExpression="ten_thietbi" />

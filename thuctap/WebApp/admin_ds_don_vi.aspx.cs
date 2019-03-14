@@ -27,15 +27,7 @@ namespace WebApp
 
         }
 
-        public void SearchMenu()
-        {
-            string ma = txt_search.Text;
-            string cbx = SelectItem.SelectedValue;
-            string querry = string.Format("SELECT * FROM dbo.don_vi WHERE {0} like N'%{1}%'", cbx, ma);
-            DataView dv = new DataView(db.bindDataTable(querry));
-            example.DataSource = dv;
-            example.DataBind();
-        }
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             hienthi();
@@ -159,11 +151,7 @@ namespace WebApp
             txt_mota.Text = "";
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            SearchMenu();
-        }
-
+       
         int stt = 1;
         public string get_stt()
         {
@@ -173,6 +161,15 @@ namespace WebApp
         protected void example_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
         {
            
+        }
+
+        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                //add the thead and tbody section programatically
+                e.Row.TableSection = TableRowSection.TableHeader;
+            }
         }
     }
 }

@@ -52,5 +52,14 @@ namespace WebApp.Admin
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Khôi phục tài khoản thất bại !!!', 'error');", true);
             }
         }
+
+        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                //add the thead and tbody section programatically
+                e.Row.TableSection = TableRowSection.TableHeader;
+            }
+        }
     }
 }

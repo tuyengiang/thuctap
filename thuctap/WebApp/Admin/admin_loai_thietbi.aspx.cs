@@ -26,6 +26,7 @@ namespace WebApp.Admin
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             hienthi();
         }
 
@@ -132,6 +133,22 @@ namespace WebApp.Admin
             else
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cập nhật loại thiết bị thất bại !!!', 'error');", true);
+            }
+        }
+        public void Search(String ma)
+        {
+            String sql = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB where CONCAT('ma_loaiTB','ten_loaiTB') LIKE '%" + ma.ToString() + "%'";
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+
+        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                //add the thead and tbody section programatically
+                e.Row.TableSection = TableRowSection.TableHeader;
             }
         }
     }

@@ -24,18 +24,17 @@
     <!-- plugins:js -->
   <script src="../css/jquery.js"></script>
   <script src="../css/bootstrap.min.js"></script>
-  <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
-  <script src="../css/admin/vendors/js/vendor.bundle.base.js"></script>
-  <script src="../css/admin/vendors/js/vendor.bundle.addons.js"></script>
   <script src="../css/admin/js/off-canvas.js"></script>
   <script src="../css/admin/js/misc.js"></script>
   <script src="../css/admin/js/dashboard.js"></script>
+  <script src="../css/admin/vendors/js/vendor.bundle.base.js"></script>
+  <script src="../css/admin/vendors/js/vendor.bundle.addons.js"></script>
   <script type="text/javascript" src="../css/admin/table/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="../css/admin/table/dataTables.bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
   <script type="text/javascript" src="../css/admin/table/dataTables.bootstrap.min.js"></script>
-   <script src="../css/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
    <script type="text/javascript" src="../css/angular.min.js"></script>
+  <script src="../css/main.js"></script>
   <script type="text/javascript">
         $(document).ready(function () {
             $('#MainContent_example').DataTable();
@@ -66,6 +65,7 @@
             output.src = URL.createObjectURL(event.target.files[0]);
       };
     </script>
+
 </head>
 
 <body>
@@ -102,7 +102,7 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
-  
-</body>
+   <script src="../js/ckeditor/ckeditor.js"></script>
+  </script></body>
 
 </html>

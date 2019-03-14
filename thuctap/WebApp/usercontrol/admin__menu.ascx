@@ -20,7 +20,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="/Trangchu.aspx" aria-expanded="false" >
+            <a class="nav-link" href="/Trangchu.aspx" aria-expanded="false" >
               <i class="menu-icon mdi mdi-television"></i>
               <span class="menu-title">Bảng tin</span>
             </a>
@@ -34,10 +34,7 @@
                 <div class="collapse" id="ui-post">
                   <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                      <a class="nav-link" href="/admin_ds_don_vi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thêm bài viết mới</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục</a>
+                      <a class="nav-link" href="/Admin/admin_notification.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thêm thông báo</a>
                     </li>
                   </ul>
                 </div>

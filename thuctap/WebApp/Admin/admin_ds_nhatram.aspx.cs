@@ -38,7 +38,6 @@ namespace WebApp.Admin
                 hienthi();
                 loadDropdown();
                 loadDropdown2();
-                Search(txt_search.Text);
             }
         }
         private void loadDropdown()
@@ -170,23 +169,13 @@ namespace WebApp.Admin
             }
         }
 
-        protected void txt_search_TextChanged(object sender, EventArgs e)
+       
+        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Search(txt_search.Text);
-        }
-        
-
-        public void Search(String ma)
-        {
-            String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi = don_vi.id_donvi and ma_tran LIKE '%" + ma.ToString() + "%'";
-            DataView dv = new DataView(db.bindDataTable(sql));
-            example.DataSource = dv;
-            example.DataBind();
-        }
-
-        protected void example_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-        {
-           
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.TableSection = TableRowSection.TableHeader;
+            }
         }
     }
 }
