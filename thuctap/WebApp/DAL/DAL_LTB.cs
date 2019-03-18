@@ -23,7 +23,6 @@ namespace WebApp.DAL
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@ma_loaiTB", tb.MaLoaiTB));
                 command.Parameters.Add(new SqlParameter("@ten_loaiTB", tb.TenLoaiTB));
-                command.Parameters.Add(new SqlParameter("@trang_thai", tb.TrangThai));
                 command.Parameters.Add(new SqlParameter("@mota_tb", tb.MoTa));
                 connection.Open();
                 command.ExecuteNonQuery();

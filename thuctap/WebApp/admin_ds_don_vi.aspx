@@ -3,6 +3,9 @@
 <asp:Content ID="don_vi_1" ContentPlaceHolderID="headerTitle" runat="server">
             <title>VNPT - Quản lý danh sách đơn vị</title>
 </asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="scriptMain" runat="server">
+  
+</asp:Content>
 <asp:Content ID="don_vi_2" ContentPlaceHolderID="MainContent" runat="server">
      <form runat="server" id="myform" name="registration">
           <div class="row">
@@ -31,13 +34,13 @@
                 </div>
              </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
-                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+                <span><asp:LinkButton ID="btnSearch" ValidationGroup="Search" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" ValidationGroup="Refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
             </div>
       </div>
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnSelectedIndexChanging="example_SelectedIndexChanging" PageSize="8">
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnPageIndexChanging="example_PageIndexChanging" PageSize="8">
                      <Columns>
                          <asp:BoundField DataField="ma_donvi" HeaderText="Mã đơn vị" SortExpression="ma_donvi" />
                          <asp:BoundField DataField="ten_donvi" HeaderText="Tên đơn vị" SortExpression="ten_donvi" />
@@ -45,8 +48,8 @@
                          <asp:BoundField DataField="mo_ta" HeaderText="Mô tả" SortExpression="dia_chi" />
                          <asp:TemplateField HeaderText="Chức năng">
                             <ItemTemplate>
-                               <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_donvi") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
-                               <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#Eval("ma_donvi") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
+                               <asp:LinkButton ID="btnEdit" runat="server"  ValidationGroup="Edit" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_donvi") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
+                               <asp:LinkButton ID="btnDelete" runat="server"  ValidationGroup="Delete" CommandArgument='<%#Eval("ma_donvi") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
                             </ItemTemplate>
                          </asp:TemplateField>
                      </Columns>
@@ -56,7 +59,7 @@
          <!--modal-->
           <div class="row">
                 <!-- Modal add -->
-                  <div class="modal fade" id="myMoAdd" role="dialog">
+                  <div class="modal fade" id="myMoAdd" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -64,36 +67,39 @@
                           <h4 class="modal-title">Thêm loại thiết bị mới</h4>
                         </div>
                         <div class="modal-body">
-                            <table class="table">
-                                <tr>
-                                    <td>Mã đơn bị <span>*</span></td>
-                                    <td>
-                                        <asp:TextBox ID="txt_madv" runat="server" CssClass="form-control text-input" placeholder="Nhập mã đơn vị" required="true" title="Mã đơn vị không đươc bỏ trống "></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Mã đơn vị không được bỏ trống" ControlToValidate="txt_madv" Visible="False"></asp:RequiredFieldValidator>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tên đơn bị <span>*</span></td>
-                                    <td>
-                                        <asp:TextBox ID="txt_tendv" runat="server" CssClass="form-control" placeholder="Nhập tên đơn vị"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Địa chỉ <span>*</span></td>
-                                    <td>
-                                        <asp:TextBox ID="txt_diachi" runat="server" CssClass="form-control" placeholder="Nhập địa chỉ"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Mô tả</td>
-                                    <td>
-                                        <asp:TextBox ID="txt_mota" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
-                                    </td>
-                                </tr>
-                            </table>
+                                <table class="table">
+                                    <tr>
+                                        <td>Mã đơn bị <span>*</span></td>
+                                        <td>
+                                            <asp:TextBox ID="txt_madv"  runat="server" CssClass="form-control text-input" placeholder="Nhập mã đơn vị"></asp:TextBox>
+                                            <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Mã đơn vị không được bỏ trống !!!" ControlToValidate="txt_madv" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tên đơn bị <span>*</span></td>
+                                        <td>
+                                            <asp:TextBox ID="txt_tendv" runat="server" CssClass="form-control" placeholder="Nhập tên đơn vị"></asp:TextBox>
+                                            <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Tên đơn vị không được bỏ trống !!!" ControlToValidate="txt_tendv" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ <span>*</span></td>
+                                        <td>
+                                            <asp:TextBox ID="txt_diachi" runat="server" CssClass="form-control" placeholder="Nhập địa chỉ"></asp:TextBox>
+                                            <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Địa chỉ đơn vị không được bỏ trống !!!" ControlToValidate="txt_diachi" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mô tả</td>
+                                        <td>
+                                            <asp:TextBox ID="txt_mota" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                            <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Mô tả đơn vị không được bỏ trống !!!" ControlToValidate="txt_mota" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
+                            <asp:LinkButton ID="btnAdd" runat="server"  ValidationGroup="Popup" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>

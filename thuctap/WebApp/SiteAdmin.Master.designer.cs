@@ -22,6 +22,15 @@ namespace MyNews {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder headerTitle;
         
         /// <summary>
+        /// scriptMain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder scriptMain;
+        
+        /// <summary>
         /// header control.
         /// </summary>
         /// <remarks>

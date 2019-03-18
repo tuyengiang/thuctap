@@ -274,5 +274,18 @@ namespace WebApp.Admin
                     break;
             }
         }
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        }
+        protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            example.PageIndex = e.NewPageIndex;
+            int trang_thu = e.NewPageIndex;
+            int so_dong = example.PageSize;
+            stt = trang_thu * so_dong + 1;
+            hienthi();
+        }
     }
 }

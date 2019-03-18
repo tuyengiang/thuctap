@@ -19,7 +19,7 @@ namespace WebApp.Admin
         BUS_LTB bus_ltb = new BUS_LTB();
         public void hienthi()
         {
-            String sql = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB";
+            String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -46,7 +46,7 @@ namespace WebApp.Admin
                 }
                 else
                 {
-                    DTO_LTB tb = new DTO_LTB(txt_maloaiTB.Text, txt_tenloaiTB.Text, trang_thai.SelectedValue.ToString(), txt_mota.Text);
+                    DTO_LTB tb = new DTO_LTB(txt_maloaiTB.Text, txt_tenloaiTB.Text, txt_mota.Text);
                     if (bus_ltb.Query("_Insert_loaiTB", tb))
                     {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Thêm loại thiết bị thành công !!!', 'success');", true);
@@ -99,7 +99,6 @@ namespace WebApp.Admin
             {
                 txt_maloaiTB_edit.Text = dt["ma_loaiTB"].ToString();
                 txt_tenloaiTB_edit.Text = dt["ten_loaiTB"].ToString();
-                trang_thai_edit.Text = dt["trang_thai"].ToString();
                 txt_mota_edit.Text = dt["mota_tb"].ToString();
             }
         }
@@ -123,7 +122,7 @@ namespace WebApp.Admin
 
         protected void btnEditChange_Click(object sender, EventArgs e)
         {
-            DTO_LTB tb = new DTO_LTB(txt_maloaiTB_edit.Text, txt_tenloaiTB_edit.Text, trang_thai_edit.SelectedValue.ToString(), txt_mota_edit.Text);
+            DTO_LTB tb = new DTO_LTB(txt_maloaiTB_edit.Text, txt_tenloaiTB_edit.Text, txt_mota_edit.Text);
             if (bus_ltb.Query("_Update_loaiTB", tb))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cập nhật loại thiết bị thành công !!!', 'success');", true);
@@ -161,14 +160,27 @@ namespace WebApp.Admin
             switch (item)
             {
                 case "maloai":
-                    String sql = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB Where ma_loaiTB like '%"+inputSearch.Text+"%'";
+                    String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ma_loaiTB like '%" + inputSearch.Text + "%' GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
                     BindSeach(sql);
                     break;
                 case "tenloai":
-                    String sql2 = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB Where ten_loaiTB like '%" + inputSearch.Text + "%'";
+                    String sql2 = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ten_loaiTB like '%" + inputSearch.Text + "%' GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
                     BindSeach(sql2);
                     break;
             }
+        }
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        }
+        protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            example.PageIndex = e.NewPageIndex;
+            int trang_thu = e.NewPageIndex;
+            int so_dong = example.PageSize;
+            stt = trang_thu * so_dong + 1;
+            hienthi();
         }
     }
 }

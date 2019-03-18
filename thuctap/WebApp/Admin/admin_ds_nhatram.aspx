@@ -34,23 +34,24 @@
                 </div>
              </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
-                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+                <span><asp:LinkButton ID="btnSearch" ValidationGroup="Search" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" ValidationGroup="Refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
             </div>
          </div>
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" AllowPaging="True" PageSize="10"  OnSelectedIndexChanging="example_SelectedIndexChanging" >
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" AllowPaging="True" PageSize="10" OnPageIndexChanging="example_PageIndexChanging" >
                      <Columns>
                          <asp:BoundField DataField="ma_tran" HeaderText="Mã nhà trạm" SortExpression="ma_thietbi" />
                          <asp:BoundField DataField="ten_tram" HeaderText="Tên nhà trạm" SortExpression="ten_thietbi" />
                          <asp:BoundField DataField="ten_donvi" HeaderText="Đơn vị" SortExpression="so_luong" />
+                         <asp:HyperlinkField datatextfield="Soluong" headertext="Số lượng" Target="_Blank" DataNavigateUrlFields="ma_tran" DataNavigateUrlFormatString="/Admin/admin_ds_TB.aspx?ma_tran={0}"/>
                          <asp:BoundField DataField="dia_chi" HeaderText="Địa chỉ" SortExpression="serinumber" />
                          <asp:BoundField DataField="mo_ta" HeaderText="Mô tả" SortExpression="id_loaitb" />                                                
                          <asp:TemplateField HeaderText="Chức năng">
                             <ItemTemplate>
-                               <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_tran") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
-                               <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#Eval("ma_tran") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
+                               <asp:LinkButton ID="btnEdit"  ValidationGroup="Edit" runat="server" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_tran") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
+                               <asp:LinkButton ID="btnDelete"  ValidationGroup="Delete" runat="server" CommandArgument='<%#Eval("ma_tran") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
                             </ItemTemplate>
                          </asp:TemplateField>
                      </Columns>
@@ -73,12 +74,14 @@
                                     <td>Mã nhà trạm <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_matram" runat="server" CssClass="form-control text-input" placeholder="Nhập mã nhà trạm"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator4" runat="server" ErrorMessage="Mã trạm không được bỏ trống !!!" ControlToValidate="txt_matram" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Tên nhà trạm <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_tentram" runat="server" CssClass="form-control" placeholder="Nhập tên nhà trạm"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator1" runat="server" ErrorMessage="Tên trạm không được bỏ trống !!!" ControlToValidate="txt_tentram" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                  <tr>
@@ -91,18 +94,20 @@
                                     <td>Địa chỉ <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_diachi" runat="server" CssClass="form-control" placeholder="Nhập địa chỉ nhà trạm"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator2" runat="server" ErrorMessage="Địa chỉ không được bỏ trống !!!" ControlToValidate="txt_diachi" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                  <tr>
                                     <td>Mô tả <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_mota" runat="server" CssClass="form-control" placeholder="Nhập mô tả nhà trạm"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator3" runat="server" ErrorMessage="Mô tả không được bỏ trống !!!" ControlToValidate="txt_mota" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
+                            <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="Popup" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -124,6 +129,7 @@
                                     <td>Mã nhà trạm <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_ma_edit" runat="server" CssClass="form-control text-input" placeholder="Nhập mã nhà trạm" ReadOnly="true"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Tên đơn vị không được bỏ trống !!!" ControlToValidate="txt_ma_edit" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>

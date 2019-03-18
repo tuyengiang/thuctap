@@ -33,13 +33,13 @@
                 </div>
              </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
-                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+                <span><asp:LinkButton ID="btnSearch" ValidationGroup="Search" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" ValidationGroup="Refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
             </div>
       </div>
         <div class="row">
             <div class="table-responsive">
-                  <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" OnRowDataBound="example_RowDataBound">
+                  <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" OnRowDataBound="example_RowDataBound" AllowPaging="True" PageSize="10" OnPageIndexChanging="example_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="name_user" HeaderText="Tên tài khoản" SortExpression="ma_donvi" />
                             <asp:BoundField DataField="tenhienthi" HeaderText="Tên hiển thị" SortExpression="ten_donvi" />
@@ -49,11 +49,11 @@
                             <asp:BoundField DataField="name_super" HeaderText="Quyền hạn" SortExpression="dia_chi" />
                             <asp:TemplateField HeaderText="Chức năng">
                                 <ItemTemplate>
-                                     <asp:LinkButton ID="btnReset" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-secondary"  data-target="#myMoDelete" CommandName="resset" title="Cập nhật mật khẩu"><i class="fa fa-key"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Xóa tài khoản" CommandName="xoa"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btnRecycle" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Khôi phục tài khoản" CommandName="recory"><i class="fa fa-recycle" aria-hidden="true"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btnKhoa" runat="server" CssClass="btn btn-warning"   CommandArgument='<%#Eval("name_user") %>' data-target="#myMoKhoa" title="Khóa cài khoản" CommandName="khoa"><i class="fa fa-lock"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btn_Setup" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-primary"  data-target="#myMoSetting" CommandName="setting" title="Cài đặt tài khoản"><i class="fa fa-cog"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnReset" ValidationGroup="reset" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-secondary"  data-target="#myMoDelete" CommandName="resset" title="Cập nhật mật khẩu"><i class="fa fa-key"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnDelete" ValidationGroup="delete" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Xóa tài khoản" CommandName="xoa"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnRecycle" ValidationGroup="recy" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Khôi phục tài khoản" CommandName="recory"><i class="fa fa-recycle" aria-hidden="true"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnKhoa" ValidationGroup="khoa" runat="server" CssClass="btn btn-warning"   CommandArgument='<%#Eval("name_user") %>' data-target="#myMoKhoa" title="Khóa cài khoản" CommandName="khoa"><i class="fa fa-lock"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btn_Setup" ValidationGroup="setup" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-primary"  data-target="#myMoSetting" CommandName="setting" title="Cài đặt tài khoản"><i class="fa fa-cog"></i></asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                          </Columns>
@@ -75,16 +75,19 @@
                                     <td>Tên tài khoản <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_username" runat="server" CssClass="form-control text-input" placeholder="Nhập tên tài khoản"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator4" runat="server" ErrorMessage="Tên tài khoản không được bỏ trống !!!" ControlToValidate="txt_username" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                     <td style="padding-left:10px !important;">Tên hiển thị <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_name" runat="server" CssClass="form-control" placeholder="Nhập tên hiển thị"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator1" runat="server" ErrorMessage="Tên hiển thị không được bỏ trống !!!" ControlToValidate="txt_name" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Mật khẩu<span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_password" runat="server" CssClass="form-control text-input" placeholder="Nhập mật khẩu" TextMode="Password"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator2" runat="server" ErrorMessage="Mật khẩu không được bỏ trống !!!" ControlToValidate="txt_password" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                     <td style="padding-left:10px !important;">Ngày sinh<span>*</span></td>
                                     <td>
@@ -95,6 +98,7 @@
                                     <td>Số điện thoại<span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_sdt" runat="server" CssClass="form-control text-input" placeholder="Nhập số điện thoại" TextMode="Number"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator3" runat="server" ErrorMessage="Số điện thoại không được bỏ trống !!!" ControlToValidate="txt_sdt" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                     <td style="padding-left:10px !important;">Đơn vị <span>*</span></td>
                                     <td>
@@ -127,7 +131,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm tài khoản</asp:LinkButton>
+                            <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="Popup" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm tài khoản</asp:LinkButton>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -150,12 +154,13 @@
                                     <td>Mật khẩu mới</td>
                                     <td>
                                         <asp:TextBox ID="txt_passnew" Text="12345678" runat="server" CssClass="form-control text-input" TextMode="Password" placeholder="Nhập mật khẩu mới"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup1"  ID="RequiredFieldValidator5" runat="server" ErrorMessage="Tên hiển thị không được bỏ trống !!!" ControlToValidate="txt_passnew" Display="Dynamic"></asp:RequiredFieldValidator>                                        
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnResset" runat="server" CssClass="btn btn-success" OnClick="btnResset_Click"><i class="fa fa-refresh"></i> Resset mật khẩu</asp:LinkButton>
+                            <asp:LinkButton ID="btnResset" runat="server" CssClass="btn btn-success" ValidationGroup="Popup1" OnClick="btnResset_Click"><i class="fa fa-refresh"></i> Resset mật khẩu</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>

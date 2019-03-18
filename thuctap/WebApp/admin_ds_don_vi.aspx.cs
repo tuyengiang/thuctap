@@ -38,18 +38,7 @@ namespace WebApp
         {
             try
             {
-                String sql = "Select ma_donvi from don_vi where ma_donvi='" + txt_madv.Text + "'";
-                String ma = "";
-                foreach(DataRow dt in db.bindDataTable(sql).Rows)
-                {
-                    ma = dt["ma_donvi"].ToString();
-                }
-                if (ma == txt_madv.Text)
-                {
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Mã đơn vị đã tồn tại !!!', 'error');", true);                    
-                }
-                else
-                {
+                    
                     DTO_DV dv = new DTO_DV(txt_madv.Text, txt_tendv.Text, txt_diachi.Text, txt_mota.Text);
                     if (bus_dv.Query("_Insert_donvi", dv))
                     {
@@ -61,7 +50,7 @@ namespace WebApp
                     {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Thêm đơn vị thất bại !!!', 'error');", true);
                     }
-                }
+                
             }
             catch(Exception ex)
             {
@@ -194,6 +183,15 @@ namespace WebApp
 
         protected void btn_refresh_Click(object sender, EventArgs e)
         {
+            hienthi();
+        }
+
+        protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            example.PageIndex = e.NewPageIndex;
+            int trang_thu = e.NewPageIndex;
+            int so_dong = example.PageSize;
+            stt = trang_thu * so_dong + 1;
             hienthi();
         }
     }

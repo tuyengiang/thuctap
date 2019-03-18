@@ -29,23 +29,23 @@
                 </div>
              </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
-                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+                <span><asp:LinkButton ID="btnSearch" ValidationGroup="Search" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" ValidationGroup="Refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
             </div>
       </div>
         <!--list-->
         <div class="row">
                   <div class="table-responsive">
-                        <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand">
+                        <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" PageSize="10" OnPageIndexChanging="example_PageIndexChanging">
                             <Columns>
                                <asp:BoundField DataField="ma_loaiTB" HeaderText="Mã loại TB" SortExpression="ma_donvi" />
                                <asp:BoundField DataField="ten_loaiTB" HeaderText="Tên loại TB" SortExpression="ten_donvi" />
-                               <asp:BoundField DataField="trang_thaiA" HeaderText="Tình trạng" SortExpression="dia_chi" />
+                               <asp:HyperlinkField datatextfield="Soluong" headertext="Số lượng" Target="_Blank" DataNavigateUrlFields="ma_loaiTB" DataNavigateUrlFormatString="/Admin/admin_ds_TB.aspx?ma_loaiTB={0}"/>
                                <asp:BoundField DataField="mota_tb" HeaderText="Mô tả" SortExpression="dia_chi" />
                                <asp:TemplateField HeaderText="Chức năng">
                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_loaiTB") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
-                                        <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#Eval("ma_loaiTB") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btnEdit"  ValidationGroup="Edit" runat="server" CssClass="btn btn-primary" CommandArgument='<%#Eval("ma_loaiTB") %>'  data-target="#myMoEdit" CommandName="chinhsua" UseSubmitBehavior="false"><i class="fa fa-edit"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btnDelete"  ValidationGroup="Delete" runat="server" CommandArgument='<%#Eval("ma_loaiTB") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" CommandName="xoa"><i class="fa fa-trash"></i></asp:LinkButton>
                                    </ItemTemplate>
                                </asp:TemplateField>
                            </Columns>
@@ -68,33 +68,27 @@
                                     <td>Mã loại TB <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_maloaiTB" runat="server" CssClass="form-control text-input" placeholder="Nhập mã loại thiết bị"></asp:TextBox>
+                                        <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Mã loại thiết bị không được bỏ trống !!!" ControlToValidate="txt_maloaiTB" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Tên loại TB <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_tenloaiTB" runat="server" CssClass="form-control" placeholder="Nhập tên loại thiết bị"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Trạng thái<span>*</span></td>
-                                    <td>
-                                        <asp:DropDownList ID="trang_thai" runat="server" CssClass="form-control">
-                                             <asp:ListItem Text="Có thiết bị" Value="true"></asp:ListItem>
-                                             <asp:ListItem Text="Không có thiết bị" Value="false"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Tên loại thiết bị không được bỏ trống !!!" ControlToValidate="txt_tenloaiTB" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Mô tả</td>
                                     <td>
                                         <asp:TextBox ID="txt_mota" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Nhập mô tả"></asp:TextBox>
+                                        <asp:RequiredFieldValidator  ValidationGroup="Popup" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Mô tả không được bỏ trống !!!" ControlToValidate="txt_mota" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới</asp:LinkButton>
+                            <asp:LinkButton ID="btnAdd" runat="server"  ValidationGroup="Popup" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới</asp:LinkButton>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -122,15 +116,6 @@
                                                 <td>Tên loaiTB <span>*</span></td>
                                                 <td>
                                                     <asp:TextBox ID="txt_tenloaiTB_edit" runat="server" CssClass="form-control" placeholder="Nhập tên đơn vị"></asp:TextBox>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Trạng thái<span>*</span></td>
-                                                <td>
-                                                    <asp:DropDownList ID="trang_thai_edit" runat="server" CssClass="form-control">
-                                                         <asp:ListItem Text="Có thiết bị" Value="true"></asp:ListItem>
-                                                          <asp:ListItem Text="Không có thiết bị" Value="false"></asp:ListItem>
-                                                    </asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <tr>

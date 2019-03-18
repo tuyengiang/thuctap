@@ -26,7 +26,7 @@ namespace WebApp.Admin
         BUS_TRAM bus = new BUS_TRAM();
         public void hienthi()
         {
-            String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi";
+            String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -194,21 +194,7 @@ namespace WebApp.Admin
             example.DataSource = dv;
             example.DataBind();
         }
-        int stt = 1;
-        public string get_stt()
-        {
-            return Convert.ToString(stt++);
-        }
-        protected void example_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-        {
-            /*example.PageIndex = e.NewPageIndex;
-            int trang_thu = e.NewPageIndex;
-            int so_dong = example.PageSize;
-            stt = trang_thu * so_dong + 1;
-            hienthi();*/
-            
-        }
-
+       
         public void BindSeach(String sql)
         {
             DataView dv = new DataView(db.bindDataTable(sql));
@@ -221,15 +207,15 @@ namespace WebApp.Admin
             String item = searchSelect.SelectedValue.ToString();
             switch (item) {
                 case "madv":
-                    String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and ma_tran LIKE '%" + inputSearch.Text + "%'";
+                    String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.ma_tran like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql);
                     break;
                 case "tendv":
-                    String sql2 = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and ten_tram LIKE '%" + inputSearch.Text + "%'";
+                    String sql2 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.ten_tram like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql2);
                     break;
                 case "diachi":
-                    String sql3 = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and dia_chi LIKE '%" + inputSearch.Text + "%'";
+                    String sql3 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.dia_chi like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql3);
                     break;
             }
@@ -239,6 +225,25 @@ namespace WebApp.Admin
         protected void btn_refresh_Click(object sender, EventArgs e)
         {
             hienthi();
+        }
+
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        }
+        protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            example.PageIndex = e.NewPageIndex;   //trang hien tai
+            int trang_thu = e.NewPageIndex;      //the hien trang thu may
+            int so_dong = example.PageSize;       //moi trang co bao nhieu dong
+            stt = trang_thu * so_dong + 1;
+            hienthi();
+        }
+
+        protected void example_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+        {
+
         }
     }
 }
