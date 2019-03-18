@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="admin_header.ascx.cs" Inherits="WebApp.usercontrol.admin_header" %>
-
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <a class="navbar-brand brand-logo" href="/Trangchu.aspx">
@@ -74,7 +73,7 @@
               </span></a></li>
             <li class="nav-item dropdown d-none d-xl-inline-block">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-             <asp:Image ID="Image1" runat="server" Cssclass="img-xs rounded-circle"/>
+                <asp:Image ID="Image1" runat="server" Cssclass="img-xs rounded-circle"/>  
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <a class="dropdown-item p-0">

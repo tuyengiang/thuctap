@@ -162,14 +162,39 @@ namespace WebApp
         {
            
         }
-
-        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        
+        public void BindSeach(String sql)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String item = searchSelect.SelectedValue.ToString();
+            switch (item)
             {
-                //add the thead and tbody section programatically
-                e.Row.TableSection = TableRowSection.TableHeader;
+                case "madv":
+                    String sql = "SELECT * FROM don_vi WHERE ma_donvi LIKE '%"+inputSearch.Text+"%'";
+                    BindSeach(sql);
+                    break;
+                case "tendv":
+                    String sql2 = "SELECT * FROM don_vi WHERE ten_donvi LIKE '%" + inputSearch.Text + "%'";
+                    BindSeach(sql2);
+                    break;
+                case "diachi":
+                    String sql3 = "SELECT * FROM don_vi WHERE dia_chi LIKE '%" + inputSearch.Text + "%'";
+                    BindSeach(sql3);
+                    break;
+                case "NULL":
+                    hienthi();
+                    break;
             }
+        }
+
+        protected void btn_refresh_Click(object sender, EventArgs e)
+        {
+            hienthi();
         }
     }
 }

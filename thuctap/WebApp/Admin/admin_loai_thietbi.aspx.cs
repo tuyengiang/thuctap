@@ -143,12 +143,31 @@ namespace WebApp.Admin
             example.DataBind();
         }
 
-        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        
+
+        protected void btn_refresh_Click(object sender, EventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+            hienthi();
+        }
+        public void BindSeach(String sql)
+        {
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String item = searchSelect.SelectedValue.ToString();
+            switch (item)
             {
-                //add the thead and tbody section programatically
-                e.Row.TableSection = TableRowSection.TableHeader;
+                case "maloai":
+                    String sql = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB Where ma_loaiTB like '%"+inputSearch.Text+"%'";
+                    BindSeach(sql);
+                    break;
+                case "tenloai":
+                    String sql2 = "SELECT *,case trang_thai when 'False' then N'Không có thiết bị' when 'True' then N'Có thiết bị' end as trang_thaiA FROM loai_TB Where ten_loaiTB like '%" + inputSearch.Text + "%'";
+                    BindSeach(sql2);
+                    break;
             }
         }
     }

@@ -11,13 +11,33 @@
                     <i class="fa fa-angle-right"></i>
                     <a href="/admin_ds_don_vi.aspx">Quản lý danh mục đơn vị</a>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myMoAdd"><i class="fa fa-plus-circle"></i> Thêm mới</button>
-                <button type="submit" class="btn btn-default" style="margin-left:10px;" onclick="return confirm('Bạn có muốn load lại trang không?');"><i class="fa fa-refresh"></i> Tải lại trang</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myMoAdd"><i class="fa fa-plus-circle"></i> Thêm mới đơn vị</button>
           </div>
-         
+         <div class="row" id="form">
+            <div class="col-xs-12 col-sm-12 col-md-4"></div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                     <asp:DropDownList ID="searchSelect" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="--- Tìm kiếm theo ---" Value="NULL"></asp:ListItem>
+                        <asp:ListItem Text="Mã đơn vị" Value="madv"></asp:ListItem>
+                        <asp:ListItem Text="Tên đơn vị" Value="tendv"></asp:ListItem>
+                        <asp:ListItem Text="Địa chỉ" Value="diachi"></asp:ListItem>
+                     </asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                   <asp:TextBox ID="inputSearch" runat="server" CssClass="form-control" placeholder="Nhập từ khóa tìm kiếm"></asp:TextBox>
+                </div>
+             </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+            </div>
+      </div>
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnSelectedIndexChanging="example_SelectedIndexChanging" PageSize="8" OnRowDataBound="example_RowDataBound">
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnSelectedIndexChanging="example_SelectedIndexChanging" PageSize="8">
                      <Columns>
                          <asp:BoundField DataField="ma_donvi" HeaderText="Mã đơn vị" SortExpression="ma_donvi" />
                          <asp:BoundField DataField="ten_donvi" HeaderText="Tên đơn vị" SortExpression="ten_donvi" />

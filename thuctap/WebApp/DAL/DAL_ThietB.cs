@@ -32,6 +32,7 @@ namespace WebApp.DAL
                 command.Parameters.Add(new SqlParameter("@nguoisua", tb.USER_EDIT));
                 command.Parameters.Add(new SqlParameter("@id_loaitb", tb.LOAITB));
                 command.Parameters.Add(new SqlParameter("@id_tram", tb.TRAM));
+                command.Parameters.Add(new SqlParameter("@inserted", tb.INSERTED));
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -45,7 +46,7 @@ namespace WebApp.DAL
 
         }
 
-        public bool Delete(String name, String tb)
+        public bool Delete(String name, String tb,String value)
         {
             try
             {
@@ -53,6 +54,7 @@ namespace WebApp.DAL
                 SqlCommand command = new SqlCommand(name, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@ma_thietbi", tb));
+                command.Parameters.Add(new SqlParameter("@inserted", value));
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();

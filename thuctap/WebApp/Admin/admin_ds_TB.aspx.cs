@@ -28,15 +28,35 @@ namespace WebApp.Admin
                 loadDropdown_edit();
                 loadTb_edit();
                 loaddv_edit();
+                loadTB();
                 txt_ngay_nhan_edit.Text = DateTime.Now.ToString();
             }
         }
         public void hienthi()
         {
-            String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram";
-            DataView dv = new DataView(db.bindDataTable(sql));
-            example.DataSource = dv;
-            example.DataBind();
+            if (Session["username"]!=null)
+            {
+                string user = Session["username"].ToString();
+                string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                {
+                    string id = dt["id_donvi"].ToString();
+                    String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                    foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                    {
+                        string id_tram = dt1["id_tram"].ToString();
+                        String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.id_tram='" + id_tram + "' and thiet_bi.inserted=1";
+                        DataView dv = new DataView(db.bindDataTable(sql));
+                        example.DataSource = dv;
+                        example.DataBind();
+                    }
+                }
+            }
+            else
+            {
+                Response.Redirect("~/DangNhap.aspx");
+            }
+            
         }
         private void loadDropdown()
         {
@@ -45,6 +65,14 @@ namespace WebApp.Admin
             id_tram.DataTextField = "ten_tram";
             id_tram.DataValueField = "id_tram";
             id_tram.DataBind();
+        }
+        private void loadTB()
+        {
+            String sql = "Select * from loai_TB";
+            searchDV.DataSource = db.bindDataTable(sql);
+            searchDV.DataTextField = "ten_loaiTB";
+            searchDV.DataValueField = "id_loaiTB";
+            searchDV.DataBind();
         }
         private void loadTb()
         {
@@ -91,7 +119,7 @@ namespace WebApp.Admin
         {
             try
             {
-                String sql = "Select ma_thietbi,serinumber from thiet_bi where ma_thietbi='" + txt_matb.Text + "'";
+                String sql = "Select ma_thietbi,serinumber from thiet_bi where ma_thietbi='" + txt_matb.Text + "' and thiet_bi.inserted=1";
                 String ma = "";
                 String n = "";
                 foreach (DataRow dt in db.bindDataTable(sql).Rows)
@@ -122,7 +150,7 @@ namespace WebApp.Admin
                         foreach (DataRow dt in db.bindDataTable(id).Rows)
                         {
                             id_user = Convert.ToInt32(dt["id_user"]);
-                            DTO_ThietB dtb = new DTO_ThietB(txt_matb.Text, txt_tentb.Text, dvtinh, soluong, txt_seri.Text, trang_thai.SelectedValue.ToString(), d, date, date, id_user, id_user, id_loai, tram);
+                            DTO_ThietB dtb = new DTO_ThietB(txt_matb.Text, txt_tentb.Text, dvtinh, soluong, txt_seri.Text, trang_thai.SelectedValue.ToString(), d, date, date, id_user, id_user, id_loai, tram,1);
                             if (bus_tb.Query("_Insert_TB", dtb))
                             {
                                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Thêm thiết bị thành công !!!', 'success');", true);
@@ -204,7 +232,7 @@ namespace WebApp.Admin
                 foreach (DataRow dt in db.bindDataTable(id).Rows)
                 {
                     id_user = Convert.ToInt32(dt["id_user"].ToString());
-                    DTO_ThietB dtb = new DTO_ThietB(txt_matb_edit.Text, txt_tentb_edit.Text, dvtinh, soluong, txt_seri_edit.Text, trang_thai_edit.SelectedValue.ToString(), d, date, date, user_create, id_user, id_loai, tram);
+                    DTO_ThietB dtb = new DTO_ThietB(txt_matb_edit.Text, txt_tentb_edit.Text, dvtinh, soluong, txt_seri_edit.Text, trang_thai_edit.SelectedValue.ToString(), d, date, date, user_create, id_user, id_loai, tram,1);
                     if (bus_tb.Query("_Update_TB", dtb))
                     {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cập nhật thiết bị thành công !!!', 'success');", true);
@@ -234,7 +262,7 @@ namespace WebApp.Admin
 
         protected void btnDelete_1_Click(object sender, EventArgs e)
         {
-            if (bus_tb.Delete("_Delete_TB", txt_delete.Text))
+            if (bus_tb.Delete("_Delete_TB", txt_delete.Text,"0"))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa thiết bị thành công !!!', 'success');", true);
                 hienthi();
@@ -262,10 +290,132 @@ namespace WebApp.Admin
 
         protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+            
+        }
+
+        protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Session["username"] != null)
             {
-                //add the thead and tbody section programatically
-                e.Row.TableSection = TableRowSection.TableHeader;
+                string user = Session["username"].ToString();
+                string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                {
+                    string id = dt["id_donvi"].ToString();
+                    String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                    foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                    {
+                        string id_tram = dt1["id_tram"].ToString();
+                        String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.inserted=1 and thiet_bi.id_tram='" + id_tram + "' and id_loaitb='" + searchDV.SelectedValue.ToString() + "'";
+                        DataView dv = new DataView(db.bindDataTable(sql));
+                        example.DataSource = dv;
+                        example.DataBind();
+                    }
+                }
+            }
+            else
+            {
+                Response.Redirect("~/DangNhap.aspx");
+            }
+        }
+
+        protected void btn_refresh_Click(object sender, EventArgs e)
+        {
+            hienthi();
+        }
+
+        protected void SearchStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SearchStatus.SelectedValue.ToString()=="NULL")
+            {
+                hienthi();
+            }
+            else
+            {
+                if (Session["username"] != null)
+                {
+                    string user = Session["username"].ToString();
+                    string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                    foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                    {
+                        string id = dt["id_donvi"].ToString();
+                        String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                        foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                        {
+                            string id_tram = dt1["id_tram"].ToString();
+                            String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.inserted=1 and thiet_bi.id_tram='" + id_tram + "' and trangthai_thietbi='" + SearchStatus.SelectedValue.ToString() + "'";
+                            DataView dv = new DataView(db.bindDataTable(sql));
+                            example.DataSource = dv;
+                            example.DataBind();
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/DangNhap.aspx");
+                }
+            }
+        }
+        public void BindSeach(String sql)
+        {
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String item = searchSelect.SelectedValue.ToString();
+            switch (item)
+            {
+                case "tentb":
+                    if (Session["username"] != null)
+                    {
+                        string user = Session["username"].ToString();
+                        string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                        foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                        {
+                            string id = dt["id_donvi"].ToString();
+                            String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                            foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                            {
+                                string id_tram = dt1["id_tram"].ToString();
+                                String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.id_tram='" + id_tram + "' and thiet_bi.inserted=1 and ten_thietbi like '%" + inputSearch.Text + "%'";
+                                DataView dv = new DataView(db.bindDataTable(sql));
+                                example.DataSource = dv;
+                                example.DataBind();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("~/DangNhap.aspx");
+                    }
+                    break;
+                case "matb":
+                    if (Session["username"] != null)
+                    {
+                        string user = Session["username"].ToString();
+                        string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                        foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                        {
+                            string id = dt["id_donvi"].ToString();
+                            String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                            foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                            {
+                                string id_tram = dt1["id_tram"].ToString();
+                                String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.id_tram='" + id_tram + "' and thiet_bi.inserted=1 and ma_thietbi like '%" + inputSearch.Text + "%'";
+                                DataView dv = new DataView(db.bindDataTable(sql));
+                                example.DataSource = dv;
+                                example.DataBind();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("~/DangNhap.aspx");
+                    }
+                    break;
             }
         }
     }

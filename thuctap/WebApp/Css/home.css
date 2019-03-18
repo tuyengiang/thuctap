@@ -253,7 +253,7 @@ div#form {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 15px;
-    border-radius:5px;
+    border-radius: 5px;
 }
 div#form .form-group {
     padding-bottom: 0px !important;
@@ -266,7 +266,14 @@ div#form__search a#MainContent_btnSearch {
     padding: 8px !important;
     text-align: center;
 }
-
+div#form a#MainContent_btnSearch {
+    width: 60px;
+}
+div#form a#MainContent_btnSearch i {
+    padding-right: 0px !important;
+    text-align: center;
+    margin-right: 0px !important;
+}
 /**footer*/
 .footer {
     background: #f2f8f9;

@@ -16,9 +16,9 @@ namespace WebApp.BUS
         {
             return dal_thietB.ExcuteQuery_P(name, tb);
         }
-        public bool Delete(String name,String ma)
+        public bool Delete(String name,String ma,string value)
         {
-            return dal_thietB.Delete(name, ma);
+            return dal_thietB.Delete(name, ma,value);
         }
     }
 }

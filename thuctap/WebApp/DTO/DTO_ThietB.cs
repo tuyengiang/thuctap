@@ -20,7 +20,7 @@ namespace WebApp.DTO
         private int nguoisua;
         private int id_loaiTb;
         private int id_tram;
-
+        private int inserted;
         public string MATB
         {
             get { return ma_thietbi; }
@@ -88,8 +88,12 @@ namespace WebApp.DTO
             get { return id_tram; }
             set { id_tram = value; }
         }
-
-        public DTO_ThietB( String ma_thietbi,String ten_thietbi,int id_dvtinh,int soluong,String seri,string trang_thai,DateTime ngay_nhan,DateTime ngaytao, DateTime ngaysua, int nguoitao, int nguoisua, int id_loaiTb, int id_tram)
+        public int INSERTED
+        {
+            get { return inserted; }
+            set { inserted = value; }
+        }
+        public DTO_ThietB( String ma_thietbi,String ten_thietbi,int id_dvtinh,int soluong,String seri,string trang_thai,DateTime ngay_nhan,DateTime ngaytao, DateTime ngaysua, int nguoitao, int nguoisua, int id_loaiTb, int id_tram,int inserted)
         {
             this.ma_thietbi = ma_thietbi;
             this.ten_thietbi = ten_thietbi;
@@ -104,6 +108,7 @@ namespace WebApp.DTO
             this.nguoisua = nguoisua;
             this.id_loaiTb = id_loaiTb;
             this.id_tram = id_tram;
+            this.inserted = inserted;
         }
     }
 }

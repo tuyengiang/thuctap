@@ -19,9 +19,28 @@ namespace WebApp.Admin
     {
         Class1 db = new Class1();
         BUS_AD bus = new BUS_AD();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                hienthi();
+                loadDropdown();
+                loadUser();
+                loadSearch();
+                foreach (GridViewRow row in example.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                       LinkButton _btnRecycle = row.FindControl("btnRecycle") as LinkButton;
+                       _btnRecycle.Visible = false;
+                        
+                    }
+                }
+            }
+        }
         public void hienthi()
         {
-            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper AND xoatk='False'";
+            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -34,6 +53,14 @@ namespace WebApp.Admin
             id_donvi.DataValueField = "id_donvi";
             id_donvi.DataBind();
         }
+        private void loadSearch()
+        {
+            String sql = "Select * from don_vi";
+            searchDV.DataSource = db.bindDataTable(sql);
+            searchDV.DataTextField = "ten_donvi";
+            searchDV.DataValueField = "id_donvi";
+            searchDV.DataBind();
+        }
         private void loadUser()
         {
             String sql = "Select * from group_user";
@@ -41,12 +68,6 @@ namespace WebApp.Admin
             id_supper.DataTextField = "name_super";
             id_supper.DataValueField = "id_supper";
             id_supper.DataBind();
-        }
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            hienthi();
-            loadDropdown();
-            loadUser();
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)
@@ -115,7 +136,7 @@ namespace WebApp.Admin
                 string ma = e.CommandArgument.ToString();
                 txt_ten2.Text = ma.ToString();
                 txt_xoa.Text = ma.ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddDelete();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddDelete();", true);                
             }
             else if (e.CommandName == "resset")
             {
@@ -150,6 +171,26 @@ namespace WebApp.Admin
             if (bus.Xoa("_Xoa_Account", "True", txt_xoa.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa tài khoản thành công !!!', 'success');", true);
+                /*foreach (GridViewRow row in example.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        String sql = "select xoatk from Account where name_user='" + txt_xoa.Text + "'";
+                        string xoatk = "";
+                        foreach (DataRow dt in db.bindDataTable(sql).Rows)
+                        {
+                            xoatk = dt["xoatk"].ToString();
+                            LinkButton _btnRecycle = row.FindControl("btnRecycle") as LinkButton;
+                            LinkButton _btnxoa = row.FindControl("btnDelete") as LinkButton;
+                            if (xoatk == "True")
+                            {
+                                _btnxoa.Visible = false;
+                                _btnRecycle.Visible = true;
+                            }
+                        }
+
+                    }
+                }*/
                 hienthi();
             }
             else
@@ -194,12 +235,43 @@ namespace WebApp.Admin
             }
         }
 
+        protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper AND Account.id_donvi='" + searchDV.SelectedValue.ToString()+"' ";
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+
+        protected void btn_refresh_Click(object sender, EventArgs e)
+        {
+            hienthi();
+        }
+        
         protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
+            
+        }
+        public void BindSeach(String sql)
+        {
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String item = searchSelect.SelectedValue.ToString();
+            switch (item)
             {
-                //add the thead and tbody section programatically
-                e.Row.TableSection = TableRowSection.TableHeader;
+                case "tentk":
+                    String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and name_user like '%"+inputSearch.Text+"%'";
+                    BindSeach(sql);
+                    break;
+                case "tenht":
+                    String sql3 = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and tenhienthi like 'N%" + inputSearch.Text + "%'";
+                    BindSeach(sql3);
+                    break;
             }
         }
     }

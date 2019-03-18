@@ -38,6 +38,7 @@ namespace WebApp.Admin
                 hienthi();
                 loadDropdown();
                 loadDropdown2();
+                loadSearch();
             }
         }
         private void loadDropdown()
@@ -47,6 +48,14 @@ namespace WebApp.Admin
             id_donviSelect.DataTextField = "ten_donvi";
             id_donviSelect.DataValueField = "id_donvi";
             id_donviSelect.DataBind();
+        }
+        private void loadSearch()
+        {
+            String sql = "Select * from don_vi";
+            searchDV.DataSource = db.bindDataTable(sql);
+            searchDV.DataTextField = "ten_donvi";
+            searchDV.DataValueField = "id_donvi";
+            searchDV.DataBind();
         }
         private void loadDropdown2()
         {
@@ -176,6 +185,60 @@ namespace WebApp.Admin
             {
                 e.Row.TableSection = TableRowSection.TableHeader;
             }
+        }
+
+        protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and nha_tram.id_donvi='" + searchDV.SelectedValue.ToString()+"'";
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        }
+        protected void example_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        {
+            /*example.PageIndex = e.NewPageIndex;
+            int trang_thu = e.NewPageIndex;
+            int so_dong = example.PageSize;
+            stt = trang_thu * so_dong + 1;
+            hienthi();*/
+            
+        }
+
+        public void BindSeach(String sql)
+        {
+            DataView dv = new DataView(db.bindDataTable(sql));
+            example.DataSource = dv;
+            example.DataBind();
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String item = searchSelect.SelectedValue.ToString();
+            switch (item) {
+                case "madv":
+                    String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and ma_tran LIKE '%" + inputSearch.Text + "%'";
+                    BindSeach(sql);
+                    break;
+                case "tendv":
+                    String sql2 = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and ten_tram LIKE '%" + inputSearch.Text + "%'";
+                    BindSeach(sql2);
+                    break;
+                case "diachi":
+                    String sql3 = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and dia_chi LIKE '%" + inputSearch.Text + "%'";
+                    BindSeach(sql3);
+                    break;
+            }
+
+        }
+
+        protected void btn_refresh_Click(object sender, EventArgs e)
+        {
+            hienthi();
         }
     }
 }

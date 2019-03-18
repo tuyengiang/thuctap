@@ -11,10 +11,32 @@
                     <a href="/Admin/admin_add_Account.aspx">Danh sách tài khoản</a>
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Thêm mới tài khoản</button>
-                <a href="/Admin/admin_ds_remove_account.aspx" class="btn btn-warning" style="margin-left:10px !important"><i class="fa fa-trash"></i> Khôi phục tài khoản</a>
-                <button type="submit" class="btn btn-default" style="margin-left:10px;" onclick="return confirm('Bạn có muốn load lại trang không?');"><i class="fa fa-refresh"></i> Tải lại trang</button>
-          </div><!--breadcrum-->
-         
+        </div><!--breadcrum-->
+       <div class="row" id="form">
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <div class="form-group">
+                     <asp:DropDownList ID="searchDV" runat="server" CssClass="form-control" OnSelectedIndexChanged="searchDV_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                     <asp:DropDownList ID="searchSelect" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="--- Tìm kiếm theo ---" Value="NULL"></asp:ListItem>
+                        <asp:ListItem Text="Tên tài khoản" Value="tentk"></asp:ListItem>
+                        <asp:ListItem Text="Tên hiển thị" Value="tenht"></asp:ListItem>
+                     </asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                   <asp:TextBox ID="inputSearch" runat="server" CssClass="form-control" placeholder="Nhập từ khóa tìm kiếm"></asp:TextBox>
+                </div>
+             </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <span><asp:LinkButton ID="btnSearch" runat="server" CssClass="btn btn-primary" OnClick="btnSearch_Click"><i class="fa fa-search"></i></asp:LinkButton></span>
+                <span><asp:LinkButton ID="btn_refresh" runat="server" CssClass="btn btn-success" OnClick="btn_refresh_Click"><i class="fa fa-refresh"></i> Refresh</asp:LinkButton></span>
+            </div>
+      </div>
         <div class="row">
             <div class="table-responsive">
                   <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" OnRowDataBound="example_RowDataBound">
@@ -29,6 +51,7 @@
                                 <ItemTemplate>
                                      <asp:LinkButton ID="btnReset" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-secondary"  data-target="#myMoDelete" CommandName="resset" title="Cập nhật mật khẩu"><i class="fa fa-key"></i></asp:LinkButton>
                                      <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Xóa tài khoản" CommandName="xoa"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnRecycle" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Khôi phục tài khoản" CommandName="recory"><i class="fa fa-recycle" aria-hidden="true"></i></asp:LinkButton>
                                      <asp:LinkButton ID="btnKhoa" runat="server" CssClass="btn btn-warning"   CommandArgument='<%#Eval("name_user") %>' data-target="#myMoKhoa" title="Khóa cài khoản" CommandName="khoa"><i class="fa fa-lock"></i></asp:LinkButton>
                                      <asp:LinkButton ID="btn_Setup" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-primary"  data-target="#myMoSetting" CommandName="setting" title="Cài đặt tài khoản"><i class="fa fa-cog"></i></asp:LinkButton>
                                 </ItemTemplate>
