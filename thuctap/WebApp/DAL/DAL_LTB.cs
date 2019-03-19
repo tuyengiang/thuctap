@@ -10,8 +10,8 @@ using MyNews;
 
 namespace WebApp.DAL
 {
-    
-    public class DAL_LTB:Class1
+
+    public class DAL_LTB : Class1
     {
         Class1 db = new Class1();
         public bool ExcuteQuery_LTB(String name, DTO_LTB tb)
@@ -24,6 +24,7 @@ namespace WebApp.DAL
                 command.Parameters.Add(new SqlParameter("@ma_loaiTB", tb.MaLoaiTB));
                 command.Parameters.Add(new SqlParameter("@ten_loaiTB", tb.TenLoaiTB));
                 command.Parameters.Add(new SqlParameter("@mota_tb", tb.MoTa));
+                command.Parameters.Add(new SqlParameter("@status", tb.Status));
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -37,7 +38,7 @@ namespace WebApp.DAL
 
         }
 
-        public bool Delete_LTB(String name, string ma)
+        public bool Delete_LTB(String name, string ma, int id)
         {
             try
             {
@@ -45,6 +46,7 @@ namespace WebApp.DAL
                 SqlCommand command = new SqlCommand(name, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@ma_loaiTB", ma));
+                command.Parameters.Add(new SqlParameter("@status", id));
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -57,4 +59,5 @@ namespace WebApp.DAL
             }
         }
     }
+        
 }

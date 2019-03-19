@@ -17,9 +17,10 @@ namespace WebApp.Admin
     {
         Class1 db = new Class1();
         BUS_LTB bus_ltb = new BUS_LTB();
+        BUS_ThietB bus_tb = new BUS_ThietB();
         public void hienthi()
         {
-            String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
+            String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE status=1 GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -34,7 +35,7 @@ namespace WebApp.Admin
         {
             try
             {
-                String sql = "Select ma_loaiTB from loai_TB where ma_loaiTB='" + txt_maloaiTB.Text + "'";
+                String sql = "Select ma_loaiTB from loai_TB where ma_loaiTB='" + txt_maloaiTB.Text + "' and status=1 ";
                 String ma = "";
                 foreach (DataRow dt in db.bindDataTable(sql).Rows)
                 {
@@ -46,7 +47,7 @@ namespace WebApp.Admin
                 }
                 else
                 {
-                    DTO_LTB tb = new DTO_LTB(txt_maloaiTB.Text, txt_tenloaiTB.Text, txt_mota.Text);
+                    DTO_LTB tb = new DTO_LTB(txt_maloaiTB.Text, txt_tenloaiTB.Text, txt_mota.Text,1);
                     if (bus_ltb.Query("_Insert_loaiTB", tb))
                     {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Thêm loại thiết bị thành công !!!', 'success');", true);
@@ -65,15 +66,33 @@ namespace WebApp.Admin
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             string ma = txt_delete.Text;
-            if (bus_ltb.Delete("_Delete_loaiTB", ma))
+            String sql = "SELECT id_loaiTB from loai_TB where ma_loaiTB='" + ma + "'";
+            string id;
+            foreach (DataRow dt in db.bindDataTable(sql).Rows)
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại thiết bị thành công !!!', 'success');", true);
-                hienthi();
-            }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại thiết bị thất bại !!!', 'error');", true);
+                if (bus_ltb.Delete("_Delete_loaiTB", ma, 0))
+                {
+                    id = dt["id_loaiTB"].ToString();
+                    if (id != null)
+                    {
+                        int a = Convert.ToInt32(id);
+                        if (bus_tb.Delete_tb_ltb("_Update_TB_LTB", a, 0))
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại thiết bị thành công !!!', 'success');", true);
+                            hienthi();
+                        }
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại thiết bị thành công !!!', 'success');", true);
+                        hienthi();
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại thiết bị thất bại !!!', 'error');", true);
 
+                }
             }
         }
 
@@ -122,7 +141,7 @@ namespace WebApp.Admin
 
         protected void btnEditChange_Click(object sender, EventArgs e)
         {
-            DTO_LTB tb = new DTO_LTB(txt_maloaiTB_edit.Text, txt_tenloaiTB_edit.Text, txt_mota_edit.Text);
+            DTO_LTB tb = new DTO_LTB(txt_maloaiTB_edit.Text, txt_tenloaiTB_edit.Text, txt_mota_edit.Text,1);
             if (bus_ltb.Query("_Update_loaiTB", tb))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cập nhật loại thiết bị thành công !!!', 'success');", true);
@@ -160,11 +179,11 @@ namespace WebApp.Admin
             switch (item)
             {
                 case "maloai":
-                    String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ma_loaiTB like '%" + inputSearch.Text + "%' GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
+                    String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ma_loaiTB like '%" + inputSearch.Text + "%' and status=1 GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
                     BindSeach(sql);
                     break;
                 case "tenloai":
-                    String sql2 = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ten_loaiTB like '%" + inputSearch.Text + "%' GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
+                    String sql2 = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ten_loaiTB like '%" + inputSearch.Text + "%' and status=1 GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
                     BindSeach(sql2);
                     break;
             }
@@ -176,11 +195,32 @@ namespace WebApp.Admin
         }
         protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            example.PageIndex = e.NewPageIndex;
-            int trang_thu = e.NewPageIndex;
-            int so_dong = example.PageSize;
-            stt = trang_thu * so_dong + 1;
-            hienthi();
+            if (searchSelect.SelectedValue == "maloai")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ma_loaiTB like '%" + inputSearch.Text + "%' and status=1 GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
+                BindSeach(sql);
+            }
+            else if (searchSelect.SelectedValue == "tenloai")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql2 = "SELECT ma_loaiTB, ten_loaiTB,LTB.mota_tb, COUNT(tb.id_loaitb) AS Soluong  FROM dbo.loai_TB LTB LEFT JOIN dbo.thiet_bi tb ON tb.id_loaitb = LTB.id_loaiTB WHERE ten_loaiTB like '%" + inputSearch.Text + "%' and status=1 GROUP BY ma_loaiTB, LTB.ten_loaiTB,LTB.mota_tb  ORDER BY LTB.ma_loaiTB";
+                BindSeach(sql2);
+            }
+            else
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                hienthi();
+            }
         }
     }
 }

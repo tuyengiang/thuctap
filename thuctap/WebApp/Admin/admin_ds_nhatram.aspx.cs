@@ -24,9 +24,10 @@ namespace WebApp.Admin
     {
         Class1 db = new Class1();
         BUS_TRAM bus = new BUS_TRAM();
+        BUS_ThietB bus_tb = new BUS_ThietB();
         public void hienthi()
         {
-            String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+            String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -70,7 +71,7 @@ namespace WebApp.Admin
         {
             try
             {
-                String sql = "Select ma_tran from nha_tram where ma_tran='" + txt_matram.Text + "'";
+                String sql = "Select ma_tran from nha_tram where ma_tran='" + txt_matram.Text + "' and status=1";
                 String ma = "";
                 foreach (DataRow dt in db.bindDataTable(sql).Rows)
                 {
@@ -83,7 +84,7 @@ namespace WebApp.Admin
                 else
                 {
                     int dv = Convert.ToInt32(id_donviSelect.SelectedValue.ToString());
-                    DTO_TRAM tr = new DTO_TRAM(txt_matram.Text, txt_tentram.Text, txt_diachi.Text, txt_mota.Text,dv);
+                    DTO_TRAM tr = new DTO_TRAM(txt_matram.Text, txt_tentram.Text, txt_diachi.Text, txt_mota.Text,dv,1);
                     if (bus.Query("_Insert_tram", tr))
                     {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Thêm nhà trạm thành công !!!', 'success');", true);
@@ -149,23 +150,42 @@ namespace WebApp.Admin
 
         protected void btnDelete_1_Click(object sender, EventArgs e)
         {
-            string ma = txt_delete.Text;
-            if (bus.Delete("_Delete_Tram", ma))
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại trạm thành công !!!', 'success');", true);
-                hienthi();
-            }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa loại trạm thất bại !!!', 'error');", true);
+           string ma = txt_delete.Text;
+           String sql = "SELECT id_tram from nha_tram where ma_tran='" + ma + "'";
+           string id;
+           foreach (DataRow dt in db.bindDataTable(sql).Rows)
+           {
+                if (bus.Delete("_Delete_Tram", ma, 0))
+                {
+                    id = dt["id_tram"].ToString();
+                    if (id!=null)
+                    {
+                        int a = Convert.ToInt32(id);
+                        if (bus_tb.Delete_tb_tram("_Update_TB_TRAM", a, 0))
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa trạm thành công !!!', 'success');", true);
+                            hienthi();
+                        }
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa  trạm thành công !!!', 'success');", true);
+                        hienthi();
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa trạm thất bại !!!', 'error');", true);
 
+                }
             }
+           
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             int dv = Convert.ToInt32(id_donvi_edit.SelectedValue.ToString());
-            DTO_TRAM tr = new DTO_TRAM(txt_ma_edit.Text, txt_ten_edit.Text, txt_diachi_edit.Text, txt_mota_edit.Text, dv);
+            DTO_TRAM tr = new DTO_TRAM(txt_ma_edit.Text, txt_ten_edit.Text, txt_diachi_edit.Text, txt_mota_edit.Text, dv,1);
             if (bus.Query("_Update_tram", tr))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cập nhật nhà trạm thành công !!!', 'success');", true);
@@ -189,7 +209,7 @@ namespace WebApp.Admin
 
         protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String sql = "SELECT *,don_vi.ten_donvi FROM nha_tram,don_vi where nha_tram.id_donvi=don_vi.id_donvi and nha_tram.id_donvi='" + searchDV.SelectedValue.ToString()+"'";
+            String sql = "SELECT dv.id_donvi,nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE status=1 and dv.id_donvi='"+searchDV.SelectedValue.ToString()+"' GROUP BY dv.id_donvi,nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -207,15 +227,15 @@ namespace WebApp.Admin
             String item = searchSelect.SelectedValue.ToString();
             switch (item) {
                 case "madv":
-                    String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.ma_tran like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                    String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.ma_tran like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql);
                     break;
                 case "tendv":
-                    String sql2 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.ten_tram like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                    String sql2 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.ten_tram like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql2);
                     break;
                 case "diachi":
-                    String sql3 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.dia_chi like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                    String sql3 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.dia_chi like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
                     BindSeach(sql3);
                     break;
             }
@@ -234,11 +254,41 @@ namespace WebApp.Admin
         }
         protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            example.PageIndex = e.NewPageIndex;   //trang hien tai
-            int trang_thu = e.NewPageIndex;      //the hien trang thu may
-            int so_dong = example.PageSize;       //moi trang co bao nhieu dong
-            stt = trang_thu * so_dong + 1;
-            hienthi();
+            if (searchSelect.SelectedValue == "madv")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.ma_tran like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                BindSeach(sql);
+            }
+            else if (searchSelect.SelectedValue == "tendv")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql2 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.ten_tram like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                BindSeach(sql2);
+            }
+            else if (searchSelect.SelectedValue == "diachi")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql3 = "SELECT nt.ma_tran,nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ,COUNT(tb.id_loaitb) AS SoLuong FROM dbo.nha_tram nt LEFT JOIN dbo.thiet_bi tb ON tb.id_tram = nt.id_tram JOIN dbo.don_vi dv ON dv.id_donvi = nt.id_donvi WHERE nt.status=1 and  nt.dia_chi like '%" + inputSearch.Text + "%' GROUP BY nt.ma_tran, nt.ten_tram,nt.dia_chi,nt.mo_ta,dv.ten_donvi ORDER BY nt.ma_tran";
+                BindSeach(sql3);
+            }
+            else
+            {
+                example.PageIndex = e.NewPageIndex;   //trang hien tai
+                int trang_thu = e.NewPageIndex;      //the hien trang thu may
+                int so_dong = example.PageSize;       //moi trang co bao nhieu dong
+                stt = trang_thu * so_dong + 1;
+                hienthi();
+            }
         }
 
         protected void example_PageIndexChanging1(object sender, GridViewPageEventArgs e)

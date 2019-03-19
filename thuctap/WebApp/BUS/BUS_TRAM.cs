@@ -17,9 +17,9 @@ namespace WebApp.BUS
         {
             return tr.ExcuteQuery_TRAM(name,a);
         }
-        public bool Delete(string name,string tram)
+        public bool Delete(string name,string tram,int id)
         {
-            return tr.DELETE_TRAM(name, tram);
+            return tr.DELETE_TRAM(name, tram,id);
         }
     }
 }

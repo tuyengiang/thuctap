@@ -204,7 +204,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success" OnClick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
+                            <asp:LinkButton ID="btnUpdate" runat="server" ValidationGroup="Popup2" CssClass="btn btn-success" OnClick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -223,7 +223,7 @@
                             <h4 style="font-weight:normal;">Bạn có muốn xóa thiết bị <span style="padding-left:5px;padding-right:5px;color:#ff3333;"><asp:Label ID="txt_ten" runat="server" Text="Label"></asp:Label></span>không ?</h4>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnDelete_1" runat="server" CssClass="btn btn-success" OnClick="btnDelete_1_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
+                            <asp:LinkButton ID="btnDelete_1" runat="server" ValidationGroup="Popup3" CssClass="btn btn-success" OnClick="btnDelete_1_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>

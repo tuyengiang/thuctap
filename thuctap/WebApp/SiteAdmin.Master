@@ -58,9 +58,13 @@
             $('#myMoView').modal({ backdrop: 'static', keyboard: false })
             $('#myMoView').modal('show');
       }
-     function openModalAddSetting() {
-                $('#myMoSetting').modal({ backdrop: 'static', keyboard: false })
-                $('#myMoSetting').modal('show');
+     function openModalKP() {
+                $('#myMoKP').modal({ backdrop: 'static', keyboard: false })
+                $('#myMoKP').modal('show');
+      }
+      function openModalUN() {
+                $('#myMoUN').modal({ backdrop: 'static', keyboard: false })
+                $('#myMoUN').modal('show');
       }
       var loadFile = function(event) {
             var output = document.getElementById('output');

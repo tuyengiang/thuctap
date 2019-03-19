@@ -67,5 +67,47 @@ namespace WebApp.DAL
             }
 
         }
+        public bool Delete_Tb_Tram(String name, int tb, int value)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(conn);
+                SqlCommand command = new SqlCommand(name, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@id_tram", tb));
+                command.Parameters.Add(new SqlParameter("@inserted", value));
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+                connection.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+        public bool Delete_Tb_LTB(String name, int tb, int value)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(conn);
+                SqlCommand command = new SqlCommand(name, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@id_loaitb", tb));
+                command.Parameters.Add(new SqlParameter("@inserted", value));
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+                connection.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
     }
 }

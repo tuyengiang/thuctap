@@ -91,11 +91,13 @@ namespace WebApp.Admin
         }
         private void loadDropdown()
         {
-            String sql = "Select * from nha_tram";
-            id_tram.DataSource = db.bindDataTable(sql);
-            id_tram.DataTextField = "ten_tram";
-            id_tram.DataValueField = "id_tram";
-            id_tram.DataBind();
+            
+                    String sql = "Select * from nha_tram";
+                    id_tram_edit.DataSource = db.bindDataTable(sql);
+                    id_tram_edit.DataTextField = "ten_tram";
+                    id_tram_edit.DataValueField = "id_tram";
+                    id_tram_edit.DataBind();
+               
         }
         private void loadTB()
         {
@@ -123,11 +125,12 @@ namespace WebApp.Admin
         }
         private void loadDropdown_edit()
         {
-            String sql = "Select * from nha_tram";
-            id_tram_edit.DataSource = db.bindDataTable(sql);
-            id_tram_edit.DataTextField = "ten_tram";
-            id_tram_edit.DataValueField = "id_tram";
-            id_tram_edit.DataBind();
+                    String sql = "Select * from nha_tram";
+                    id_tram_edit.DataSource = db.bindDataTable(sql);
+                    id_tram_edit.DataTextField = "ten_tram";
+                    id_tram_edit.DataValueField = "id_tram";
+                    id_tram_edit.DataBind();
+                
         }
         private void loadTb_edit()
         {
@@ -304,12 +307,7 @@ namespace WebApp.Admin
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa thiết bị thất bại !!!', 'error');", true);
             }
         }
-        int stt = 1;
-        public string get_stt()
-        {
-            return Convert.ToString(stt++);
-        }
-
+        
         protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             example.PageIndex = e.NewPageIndex;   //trang hien tai
@@ -450,14 +448,79 @@ namespace WebApp.Admin
             }
         }
 
-
+        int stt = 1;
+        public string get_stt()
+        {
+            return Convert.ToString(stt++);
+        } 
         protected void example_PageIndexChanging1(object sender, GridViewPageEventArgs e)
         {
-            example.PageIndex = e.NewPageIndex;   //trang hien tai
-            int trang_thu = e.NewPageIndex;      //the hien trang thu may
-            int so_dong = example.PageSize;       //moi trang co bao nhieu dong
-            stt = trang_thu * so_dong + 1;
-            hienthi();
+            if (searchSelect.SelectedValue == "tentb")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                if (Session["username"] != null)
+                {
+                    string user = Session["username"].ToString();
+                    string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                    foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                    {
+                        string id = dt["id_donvi"].ToString();
+                        String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                        foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                        {
+                            string id_tram = dt1["id_tram"].ToString();
+                            String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.id_tram='" + id_tram + "' and thiet_bi.inserted=1 and ten_thietbi like '%" + inputSearch.Text + "%'";
+                            DataView dv = new DataView(db.bindDataTable(sql));
+                            example.DataSource = dv;
+                            example.DataBind();
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/DangNhap.aspx");
+                }
+            }
+            else if (searchSelect.SelectedValue == "matb")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                if (Session["username"] != null)
+                {
+                    string user = Session["username"].ToString();
+                    string id_donvi = "SELECT id_donvi from Account WHERE name_user='" + user + "'";
+                    foreach (DataRow dt in db.bindDataTable(id_donvi).Rows)
+                    {
+                        string id = dt["id_donvi"].ToString();
+                        String tram = "SELECT id_tram from nha_tram where id_donvi='" + id + "'";
+                        foreach (DataRow dt1 in db.bindDataTable(tram).Rows)
+                        {
+                            string id_tram = dt1["id_tram"].ToString();
+                            String sql = "SELECT *,nha_tram.ten_tram,case trangthai_thietbi when 'True' Then N'Đang hoạt động' When 'False' Then N'Không hoạt động' end as trang_thai FROM thiet_bi,nha_tram where thiet_bi.id_tram=nha_tram.id_tram and thiet_bi.id_tram='" + id_tram + "' and thiet_bi.inserted=1 and ma_thietbi like '%" + inputSearch.Text + "%'";
+                            DataView dv = new DataView(db.bindDataTable(sql));
+                            example.DataSource = dv;
+                            example.DataBind();
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/DangNhap.aspx");
+                }
+            }
+            else
+            {
+                example.PageIndex = e.NewPageIndex;   //trang hien tai
+                int trang_thu = e.NewPageIndex;      //the hien trang thu may
+                int so_dong = example.PageSize;       //moi trang co bao nhieu dong
+                stt = trang_thu * so_dong + 1;
+                hienthi();
+            }
         }
     }
 }

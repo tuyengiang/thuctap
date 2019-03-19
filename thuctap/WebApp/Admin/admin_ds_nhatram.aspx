@@ -75,6 +75,7 @@
                                     <td>
                                         <asp:TextBox ID="txt_matram" runat="server" CssClass="form-control text-input" placeholder="Nhập mã nhà trạm"></asp:TextBox>
                                         <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator4" runat="server" ErrorMessage="Mã trạm không được bỏ trống !!!" ControlToValidate="txt_matram" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup"  ID="RequiredFieldValidator6" runat="server" ErrorMessage="" ControlToValidate="txt_matram" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
@@ -159,7 +160,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success" Onclick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
+                            <asp:LinkButton ID="btnUpdate" runat="server" ValidationGroup="Edit" CssClass="btn btn-success" Onclick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -175,10 +176,10 @@
                         </div>
                         <div class="modal-body">
                             <asp:TextBox ID="txt_delete" runat="server" Enabled="False" Visible="False"></asp:TextBox>
-                            <h4 style="font-weight:normal;">Bạn có muốn xóa trạm <span style="padding-left:5px;padding-right:5px;color:#ff3333;"><asp:Label ID="txt_ten" runat="server" Text="Label"></asp:Label></span>không ?</h4>
+                            <h4 style="font-weight:normal;">Bạn có muốn xóa trạm <span style="padding-left:5px;padding-right:5px;color:#ff3333;"><asp:Label ID="txt_ten" runat="server" Text="Label"></asp:Label></span>không ? Nếu xóa mọi thiết bị trong trạm sẽ bị xóa ?</h4>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnDelete_1" runat="server" CssClass="btn btn-success" OnClick="btnDelete_1_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
+                            <asp:LinkButton ID="btnDelete_1" ValidationGroup="Delete" runat="server" CssClass="btn btn-success" OnClick="btnDelete_1_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>

@@ -20,5 +20,13 @@ namespace WebApp.BUS
         {
             return dal_thietB.Delete(name, ma,value);
         }
+        public bool Delete_tb_tram(String name,int ma, int value)
+        {
+            return dal_thietB.Delete_Tb_Tram(name, ma, value);
+        }
+        public bool Delete_tb_ltb(String name, int ma, int value)
+        {
+            return dal_thietB.Delete_Tb_LTB(name, ma, value);
+        }
     }
 }

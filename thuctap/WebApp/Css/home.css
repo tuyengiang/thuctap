@@ -1,5 +1,17 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+﻿@font-face {
+    src: url('Roboto/Roboto-Black.ttf');
+    font-family: Roboto-Black;
+}
 
+@font-face {
+    src: url('Roboto/Roboto-Bold.ttf');
+    font-family: Roboto-Bold;
+}
+
+@font-face {
+    src: url('Roboto/Roboto-Regular.ttf');
+    font-family: Roboto-Regular;
+}
 
 /**admin*/
 a, div, h1, h2, h3, h4, h5, p, span {
@@ -12,7 +24,11 @@ body{
 body::-webkit-scrollbar {
     width: 5px;
 }
- 
+.btn {
+    font-size: 0.875rem;
+    line-height: 1;
+    font-family: "Roboto",sans-serif !important;
+}
 body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
@@ -355,9 +371,40 @@ textarea#MainContent_txt_content_edit {
 }
 .tin-tuc .title-bt {
     background: #dc2430;
+    display: inline-block;
     width: 100%;
-    padding: 8px;
-    color: #fff;
+    height: 35px;
+    background: #fff;
+    border-bottom: 2px solid #dc2430;
+}
+.title-bt .title-c {
+    background-color: #dc2430;
+    color: white;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 6px 15px;
+    float: left;
+    font-family: "Roboto",sans-serif;
+    font-weight: 600;
+}
+.title-bt b {
+    float: left;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 34px solid #333;
+    margin-bottom: 0px !important;
+}
+tr#MainContent_example td:nth-child(7) {
+    color: #00ce68;
+    font-weight: 700;
+    font-family: "Roboto",sans-serif;
+}
+tr#MainContent_example td:nth-child(8) {
+    color: #00ce68;
     font-weight: 700;
     font-family: "Roboto",sans-serif;
 }

@@ -32,11 +32,7 @@ namespace WebApp.Admin
 
         protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
-                //add the thead and tbody section programatically
-                e.Row.TableSection = TableRowSection.TableHeader;
-            }
+           
         }
 
        

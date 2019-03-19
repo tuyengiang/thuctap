@@ -26,19 +26,11 @@
             </a>
             </li>
              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-post">
+                <a class="nav-link" href="/Admin/admin_notification.aspx" aria-expanded="false" aria-controls="ui-post">
                   <i class="menu-icon fa fa-thumb-tack"></i>
                   <span class="menu-title">Quản lý thông báo</span>
-                  <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="ui-post">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="/Admin/admin_notification.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thêm thông báo</a>
-                    </li>
-                  </ul>
-                </div>
-          </li>
+            </li>
            <li class="nav-item">
             <a class="nav-link"  href="/Admin/admin_ds_TB.aspx" aria-expanded="false" >
               <i class="menu-icon fa fa-laptop"></i>

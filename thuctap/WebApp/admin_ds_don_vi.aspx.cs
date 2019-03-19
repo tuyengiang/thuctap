@@ -188,11 +188,41 @@ namespace WebApp
 
         protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            example.PageIndex = e.NewPageIndex;
-            int trang_thu = e.NewPageIndex;
-            int so_dong = example.PageSize;
-            stt = trang_thu * so_dong + 1;
-            hienthi();
+            if (searchSelect.SelectedValue == "madv")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql = "SELECT * FROM don_vi WHERE ma_donvi LIKE '%" + inputSearch.Text + "%'";
+                BindSeach(sql);
+            }
+            else if (searchSelect.SelectedValue == "tendv")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql2 = "SELECT * FROM don_vi WHERE ten_donvi LIKE '%" + inputSearch.Text + "%'";
+                BindSeach(sql2);
+            }
+            else if (searchSelect.SelectedValue == "diachi")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql3 = "SELECT * FROM don_vi WHERE dia_chi LIKE '%" + inputSearch.Text + "%'";
+                BindSeach(sql3);
+            }
+            else
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                hienthi();
+            }
         }
     }
 }

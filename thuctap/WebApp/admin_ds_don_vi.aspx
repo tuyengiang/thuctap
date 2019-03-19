@@ -40,7 +40,7 @@
       </div>
          <div class="row">
              <div class="table-responsive">
-                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnPageIndexChanging="example_PageIndexChanging" PageSize="8">
+                 <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" onrowcommand="example_RowCommand" AllowPaging="True" OnPageIndexChanging="example_PageIndexChanging" PageSize="10">
                      <Columns>
                          <asp:BoundField DataField="ma_donvi" HeaderText="Mã đơn vị" SortExpression="ma_donvi" />
                          <asp:BoundField DataField="ten_donvi" HeaderText="Tên đơn vị" SortExpression="ten_donvi" />

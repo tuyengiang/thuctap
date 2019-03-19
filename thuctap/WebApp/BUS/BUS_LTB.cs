@@ -20,9 +20,9 @@ namespace WebApp.BUS
             return dal_ltb.ExcuteQuery_LTB(name,tb);
         }
 
-        public bool Delete(string name,string ma)
+        public bool Delete(string name,string ma,int id)
         {
-            return dal_ltb.Delete_LTB(name, ma);
+            return dal_ltb.Delete_LTB(name, ma,id);
         }
     }
 }

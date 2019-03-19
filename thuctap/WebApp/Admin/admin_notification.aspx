@@ -11,11 +11,10 @@
                     <a href="/Admin/admin_notification.aspx">Danh sách thông báo</a>
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myMoAdd"><i class="fa fa-plus-circle"></i> Thêm mới thông báo</button>
-                <button type="submit" class="btn btn-default" style="margin-left:10px;" onclick="return confirm('Bạn có muốn load lại trang không?');"><i class="fa fa-refresh"></i> Tải lại trang</button>
           </div><!--breadcrum-->
            <div class="row">
                 <div class="table-responsive">
-                      <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand1" OnRowDataBound="example_RowDataBound">
+                      <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand1" AllowPaging="True"  PageSize="10">
                             <Columns>
                                 <asp:BoundField DataField="title" HeaderText="Tên thông báo" SortExpression="ma_donvi" />
                                 <asp:BoundField DataField="name_user" HeaderText="Người đăng" SortExpression="ten_donvi" />
@@ -47,18 +46,20 @@
                                     <td>Tên thông báo <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_title" runat="server" CssClass="form-control text-input" placeholder="Nhập tên thông báo"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup1"  ID="RequiredFieldValidator5" runat="server" ErrorMessage="Tên thông báo không được bỏ trống !!!" ControlToValidate="txt_title" Display="Dynamic"></asp:RequiredFieldValidator>                                        
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Nội dung <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_content" runat="server" CssClass="form-control" placeholder="Nhập nội dung thông báo" AutoPostBack="False" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup1"  ID="RequiredFieldValidator1" runat="server" ErrorMessage="Nội dung không được bỏ trống !!!" ControlToValidate="txt_content" Display="Dynamic"></asp:RequiredFieldValidator>                                        
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
+                            <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="Popup1" CssClass="btn btn-success" OnClick="btnAdd_Click"><i class="fa fa-plus-circle"></i> Thêm mới </asp:LinkButton>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -81,18 +82,20 @@
                                     <td>Tên thông báo <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_title_edit" runat="server" CssClass="form-control text-input" placeholder="Nhập tên thông báo"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup2"  ID="RequiredFieldValidator2" runat="server" ErrorMessage="Tên thông báo không được bỏ trống !!!" ControlToValidate="txt_title_edit" Display="Dynamic"></asp:RequiredFieldValidator>                                        
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Nội dung <span>*</span></td>
                                     <td>
                                         <asp:TextBox ID="txt_content_edit" runat="server" CssClass="form-control" placeholder="Nhập nội dung thông báo" AutoPostBack="False" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:RequiredFieldValidator EnableClientScript="true" ValidationGroup="Popup2"  ID="RequiredFieldValidator3" runat="server" ErrorMessage="Nội dung không được bỏ trống !!!" ControlToValidate="txt_content_edit" Display="Dynamic"></asp:RequiredFieldValidator>                                        
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success" OnClick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
+                            <asp:LinkButton ID="btnUpdate" runat="server" ValidationGroup="Popup2" CssClass="btn btn-success" OnClick="btnUpdate_Click"><i class="fa fa-save"></i> Cập nhật</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -111,7 +114,7 @@
                             <h4 style="font-weight:normal;">Bạn có muốn thông báo <span style="padding-left:5px;padding-right:5px;color:#ff3333;"><asp:Label ID="txt_ten" runat="server" Text="Label"></asp:Label></span>không ?</h4>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnDelete_1" runat="server" CssClass="btn btn-success" OnClick="btnDelete_1_Click" ><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
+                            <asp:LinkButton ID="btnDelete_1" runat="server" ValidationGroup="Popup3" CssClass="btn btn-success" OnClick="btnDelete_1_Click" ><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>

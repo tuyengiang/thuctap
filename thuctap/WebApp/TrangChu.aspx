@@ -12,8 +12,18 @@
                     </div>
                 </div><!--breadcrum-->
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12 col-md-6 tin-tuc">
-                        <div class="title-bt"><i class="fa fa-bullhorn"></i> Thông báo</div>
+                    <div class="col-sm-12 col-xs-12 col-md-8 tin-tuc">
+                        <div class="title-bt">
+                            <div class="title-c"><i class="fa fa-bullhorn"></i> Thông báo</div>
+                            <b></b>
+                        </div>
+                        <div class="content">
+                            <asp:Repeater ID="rptNoti" runat="server"> 
+                                    <ItemTemplate>  
+                                        
+                                    </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
                     </div>
                 </div>
              </form>

@@ -12,6 +12,7 @@ namespace WebApp.DTO
         private int don_vi;
         private string dia_chi;
         private string mo_ta;
+        private int status;
 
         public string MA
         {
@@ -40,13 +41,19 @@ namespace WebApp.DTO
             get { return don_vi; }
             set { don_vi = value; }
         }
-        public DTO_TRAM(string ma,string ten,string dc,string mt, int dv)
+        public int STATUS
+        {
+            get { return status; }
+            set { status = value; }
+        }
+        public DTO_TRAM(string ma,string ten,string dc,string mt, int dv,int status)
         {
             this.ma_tram = ma;
             this.ten_tram = ten;
             this.dia_chi = dc;
             this.mo_ta = mt;
             this.don_vi = dv;
+            this.status = status;
         }
 
     }

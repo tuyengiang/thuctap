@@ -27,20 +27,11 @@ namespace WebApp.Admin
                 loadDropdown();
                 loadUser();
                 loadSearch();
-                foreach (GridViewRow row in example.Rows)
-                {
-                    if (row.RowType == DataControlRowType.DataRow)
-                    {
-                       LinkButton _btnRecycle = row.FindControl("btnRecycle") as LinkButton;
-                       _btnRecycle.Visible = false;
-                        
-                    }
-                }
             }
         }
         public void hienthi()
         {
-            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper";
+            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA,case khoatk when 'False' then N'Mở khóa' when 'True' then N'Đang khóa' end as khoa,case xoatk when 'False' then N'Hoạt động' when 'True' then N'Không hoạt động' end as xoa FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();
@@ -121,7 +112,48 @@ namespace WebApp.Admin
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Tài khoản đã tồn tại !!!', 'error');", true);
             }
         }
+        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton btnXoa = (LinkButton)e.Row.FindControl("btnDelete");
+                LinkButton btnKhoiPhuc = (LinkButton)e.Row.FindControl("btnRecycle");
+                LinkButton btnkhoa = (LinkButton)e.Row.FindControl("btnKhoa");
+                LinkButton btnunlock = (LinkButton)e.Row.FindControl("btnunlock");
 
+                string xoatk = DataBinder.Eval(e.Row.DataItem, "xoatk").ToString();
+
+                if(xoatk == "True")
+                {
+                    btnXoa.Visible = false;
+                    btnKhoiPhuc.Visible = true;
+                    btnkhoa.Visible = false;
+                }
+                else
+                {
+                    btnXoa.Visible = true;
+                    btnKhoiPhuc.Visible = false;
+                    btnkhoa.Visible = true;
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton btnkhoa = (LinkButton)e.Row.FindControl("btnKhoa");
+                LinkButton btnunlock = (LinkButton)e.Row.FindControl("btunlock");
+                string khoatk = DataBinder.Eval(e.Row.DataItem, "khoatk").ToString();
+                if (khoatk == "True")
+                {
+                    btnkhoa.Visible = false;
+                    btnunlock.Visible = true;
+                }
+                else
+                {
+                    btnkhoa.Visible = true;
+                    btnunlock.Visible = false;
+                }
+            }
+
+        }
         protected void example_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "khoa")
@@ -136,7 +168,9 @@ namespace WebApp.Admin
                 string ma = e.CommandArgument.ToString();
                 txt_ten2.Text = ma.ToString();
                 txt_xoa.Text = ma.ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddDelete();", true);                
+               
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddDelete();", true);
+                
             }
             else if (e.CommandName == "resset")
             {
@@ -145,12 +179,17 @@ namespace WebApp.Admin
                 txt_passnew.Text = "12345678";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddEdit();", true);
             }
-            else if (e.CommandName == "setting")
+            else if(e.CommandName== "recory")
             {
                 string ma = e.CommandArgument.ToString();
-                title_setting.Text = ma;
-                GetData(ma);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalAddSetting();", true);
+                title_kp.Text = ma.ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalKP();", true);
+            }
+            else if (e.CommandName == "mo")
+            {
+                string ma = e.CommandArgument.ToString();
+                title_un.Text = ma.ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModalUN();", true);
             }
         }
         protected void btnKkhoaTK_Click(object sender, EventArgs e)
@@ -171,26 +210,7 @@ namespace WebApp.Admin
             if (bus.Xoa("_Xoa_Account", "True", txt_xoa.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Xóa tài khoản thành công !!!', 'success');", true);
-                /*foreach (GridViewRow row in example.Rows)
-                {
-                    if (row.RowType == DataControlRowType.DataRow)
-                    {
-                        String sql = "select xoatk from Account where name_user='" + txt_xoa.Text + "'";
-                        string xoatk = "";
-                        foreach (DataRow dt in db.bindDataTable(sql).Rows)
-                        {
-                            xoatk = dt["xoatk"].ToString();
-                            LinkButton _btnRecycle = row.FindControl("btnRecycle") as LinkButton;
-                            LinkButton _btnxoa = row.FindControl("btnDelete") as LinkButton;
-                            if (xoatk == "True")
-                            {
-                                _btnxoa.Visible = false;
-                                _btnRecycle.Visible = true;
-                            }
-                        }
-
-                    }
-                }*/
+                
                 hienthi();
             }
             else
@@ -213,27 +233,7 @@ namespace WebApp.Admin
             }
         }
 
-        public void GetData(String ma)
-        {
-            String sql = "SELECT * ,case khoatk when 'True' then N'Đang bị khóa' when 'False' then N'Mở khóa' end as khoa FROM Account WHERE name_user='" + ma.ToString() + "'";
-            foreach(DataRow dt in db.bindDataTable(sql).Rows)
-            {
-                title_khoa.Text = dt["khoa"].ToString();
-            }
-        }
-
-        protected void btn_setting_Click(object sender, EventArgs e)
-        {
-            if (bus.unlock("_Unlock_Account", title_setting.Text, mo_khoa.SelectedValue.ToString()))
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cài đặt đã được lưu lại!!!', 'success');", true);
-                hienthi();
-            }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Cài đặt thất bại !!!', 'error');", true);
-            }
-        }
+       
 
         protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -248,10 +248,7 @@ namespace WebApp.Admin
             hienthi();
         }
         
-        protected void example_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            
-        }
+        
         public void BindSeach(String sql)
         {
             DataView dv = new DataView(db.bindDataTable(sql));
@@ -265,11 +262,11 @@ namespace WebApp.Admin
             switch (item)
             {
                 case "tentk":
-                    String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and name_user like '%"+inputSearch.Text+"%'";
+                    String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and name_user like '%" + inputSearch.Text + "%'";
                     BindSeach(sql);
                     break;
                 case "tenht":
-                    String sql3 = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and tenhienthi like 'N%" + inputSearch.Text + "%'";
+                    String sql3 = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and Account.tenhienthi like 'N%" + inputSearch.Text + "%'";
                     BindSeach(sql3);
                     break;
             }
@@ -281,11 +278,64 @@ namespace WebApp.Admin
         }
         protected void example_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            example.PageIndex = e.NewPageIndex;
-            int trang_thu = e.NewPageIndex;
-            int so_dong = example.PageSize;
-            stt = trang_thu * so_dong + 1;
-            hienthi();
+            if (searchSelect.SelectedValue=="tentk")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and name_user like '%" + inputSearch.Text + "%'";
+                BindSeach(sql);
+            }
+            else if (searchSelect.SelectedValue == "tenht")
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper and Account.tenhienthi like '%" + inputSearch.Text + "%'";
+                BindSeach(sql);
+            }
+            else
+            {
+                example.PageIndex = e.NewPageIndex;
+                int trang_thu = e.NewPageIndex;
+                int so_dong = example.PageSize;
+                stt = trang_thu * so_dong + 1;
+                hienthi();
+            }
+        }
+
+        protected void btnRecy_Click(object sender, EventArgs e)
+        {
+            if (bus.refresh("_Refresh_Account", title_kp.Text, "False"))
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Khôi phục tài khoản thành công !!!', 'success');", true);
+                hienthi();
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Khôi phục tài khoản thất bại !!!', 'error');", true);
+            }
+        }
+
+        protected void Unlock_Click(object sender, EventArgs e)
+        {
+            if (bus.unlock("_Unlock_Account", title_un.Text, "False"))
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Mở khóa tài khoản thành công !!!', 'success');", true);
+                hienthi();
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "myalert", "$.notify('Mở khóa tài khoản thất bại !!!', 'error');", true);
+            }
+        }
+
+        protected void example_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow) e.Row.ID
+                = e.Row.RowIndex.ToString();
         }
     }
 }

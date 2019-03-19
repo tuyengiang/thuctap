@@ -39,7 +39,7 @@
       </div>
         <div class="row">
             <div class="table-responsive">
-                  <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" OnRowDataBound="example_RowDataBound" AllowPaging="True" PageSize="10" OnPageIndexChanging="example_PageIndexChanging">
+                  <asp:GridView ID="example" runat="server" CssClass="table table-bordered table-hover" style="width:100%" AutoGenerateColumns="False" OnRowCommand="example_RowCommand" OnRowDataBound="example_RowDataBound" AllowPaging="True" PageSize="10" OnPageIndexChanging="example_PageIndexChanging" OnRowCreated="example_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="name_user" HeaderText="Tên tài khoản" SortExpression="ma_donvi" />
                             <asp:BoundField DataField="tenhienthi" HeaderText="Tên hiển thị" SortExpression="ten_donvi" />
@@ -47,13 +47,15 @@
                             <asp:BoundField DataField="ten_donvi" HeaderText="Đơn vị" SortExpression="dia_chi" />
                             <asp:BoundField DataField="gioitinhA" HeaderText="Giới tính" SortExpression="dia_chi" />
                             <asp:BoundField DataField="name_super" HeaderText="Quyền hạn" SortExpression="dia_chi" />
+                            <asp:BoundField DataField="khoa" HeaderText="Status khóa" SortExpression="dia_chi" />
+                            <asp:BoundField DataField="xoa" HeaderText="Status Xóa" SortExpression="dia_chi" />
                             <asp:TemplateField HeaderText="Chức năng">
                                 <ItemTemplate>
                                      <asp:LinkButton ID="btnReset" ValidationGroup="reset" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-secondary"  data-target="#myMoDelete" CommandName="resset" title="Cập nhật mật khẩu"><i class="fa fa-key"></i></asp:LinkButton>
                                      <asp:LinkButton ID="btnDelete" ValidationGroup="delete" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Xóa tài khoản" CommandName="xoa"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btnRecycle" ValidationGroup="recy" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-danger"  data-target="#myMoDelete" title="Khôi phục tài khoản" CommandName="recory"><i class="fa fa-recycle" aria-hidden="true"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btnRecycle" ValidationGroup="recy" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-success"  data-target="#myMoKP" title="Khôi phục tài khoản" CommandName="recory"><i class="fa fa-recycle" aria-hidden="true"></i></asp:LinkButton>
                                      <asp:LinkButton ID="btnKhoa" ValidationGroup="khoa" runat="server" CssClass="btn btn-warning"   CommandArgument='<%#Eval("name_user") %>' data-target="#myMoKhoa" title="Khóa cài khoản" CommandName="khoa"><i class="fa fa-lock"></i></asp:LinkButton>
-                                     <asp:LinkButton ID="btn_Setup" ValidationGroup="setup" runat="server" CommandArgument='<%#Eval("name_user") %>' CssClass="btn btn-primary"  data-target="#myMoSetting" CommandName="setting" title="Cài đặt tài khoản"><i class="fa fa-cog"></i></asp:LinkButton>
+                                     <asp:LinkButton ID="btunlock" ValidationGroup="khoa" runat="server" CssClass="btn btn-primary"   CommandArgument='<%#Eval("name_user") %>' data-target="#myMoUnlock" title="Mở cài khoản" CommandName="mo"><i class="fa fa-unlock"></i></asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                          </Columns>
@@ -179,7 +181,7 @@
                            <h3>Ban có muốn xóa tài khoản <asp:Label ID="txt_ten2" runat="server" Text="Label"></asp:Label> này không ?</h3>
                         </div>
                         <div class="modal-footer">
-                            <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-success" OnClick="btnDelete_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
+                            <asp:LinkButton ID="btnDelete" ValidationGroup="Popup2" runat="server" CssClass="btn btn-success" OnClick="btnDelete_Click"><i class="fa fa-trash"></i> Xóa</asp:LinkButton>
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                         </div>
                       </div>
@@ -199,50 +201,51 @@
                                <h3>Bạn có muốn khóa tài khoản <asp:Label ID="txt_ten" runat="server" Text="Label"></asp:Label> không ?</h3>
                             </div>
                             <div class="modal-footer">
-                                <asp:LinkButton ID="btnKkhoaTK" runat="server" CssClass="btn btn-success" OnClick="btnKkhoaTK_Click"><i class="fa fa-lock"></i> Khóa tài khoản</asp:LinkButton>
+                                <asp:LinkButton ID="btnKkhoaTK" ValidationGroup="Popup3" runat="server" CssClass="btn btn-success" OnClick="btnKkhoaTK_Click"><i class="fa fa-lock"></i> Khóa tài khoản</asp:LinkButton>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                             </div>
                           </div>
       
                         </div>
                     </div><!--modal-khóa-->
-                 <div class="modal fade" id="myMoSetting" role="dialog">
+                <div class="modal fade" id="myMoKP" role="dialog">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">Cài đặt tài khoản</h4>
+                              <h4 class="modal-title">Thông báo</h4>
                             </div>
                             <div class="modal-body">
-                                <table class="table">
-                                    <tr>
-                                        <td>Tên tài khoản:</td>
-                                        <td><asp:Label ID="title_setting" runat="server" Text="Label"></asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tình trạng tài khoản: </td>
-                                        <td><asp:Label ID="title_khoa" runat="server" Text="Label"></asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mở khỏa tài khoản: </td>
-                                        <td>
-                                            <asp:DropDownList ID="mo_khoa" runat="server" CssClass="form-control">
-                                                 <asp:ListItem Text="Mở khóa tải khoản" Value="false"></asp:ListItem>
-                                                 <asp:ListItem Text="Khóa vĩnh viễn" Value="true"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </td>
-                                    </tr>
-                                </table>
-                                 
+                                <asp:TextBox ID="TextBox1" runat="server" Visible="False"></asp:TextBox>
+                               <h3>Bạn có muốn khôi phục tài khoản <asp:Label ID="title_kp" runat="server" Text="Label"></asp:Label> này không ?</h3>
                             </div>
                             <div class="modal-footer">
-                                <asp:LinkButton ID="btn_setting" runat="server" CssClass="btn btn-success" OnClick="btn_setting_Click"><i class="fa fa-save"></i> Save Setting</asp:LinkButton>
+                                <asp:LinkButton ID="btnRecy" ValidationGroup="Popup5" runat="server" CssClass="btn btn-success" OnClick="btnRecy_Click"><i class="fa fa-recycle"></i> Khôi phục tài khoản</asp:LinkButton>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
                             </div>
                           </div>
       
                         </div>
-                    </div><!--modal-setting-->
+                    </div><!--modal-khoiphuc-->
+            <div class="modal fade" id="myMoUN" role="dialog">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Thông báo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <asp:TextBox ID="TextBox2" runat="server" Visible="False"></asp:TextBox>
+                               <h3>Bạn có muốn mở tài khoản <asp:Label ID="title_un" runat="server" Text="Label"></asp:Label> này không ?</h3>
+                            </div>
+                            <div class="modal-footer">
+                                <asp:LinkButton ID="Unlock" ValidationGroup="Popup5" runat="server" CssClass="btn btn-success" OnClick="Unlock_Click"><i class="fa fa-unlock"></i> Mở tài khoản</asp:LinkButton>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
+                            </div>
+                          </div>
+      
+                        </div>
+                    </div><!--modal-khoiphuc-->
          </div><!--modal-->
     </form>
 </asp:Content>
