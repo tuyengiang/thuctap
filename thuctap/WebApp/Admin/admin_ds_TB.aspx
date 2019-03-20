@@ -118,7 +118,7 @@
                                 <tr>
                                     <td>Ngày nhận Tb <span>*</span></td>
                                     <td>
-                                        <asp:TextBox ID="ngay_nhan" runat="server" CssClass="form-control text-input" TextMode="Date"></asp:TextBox>
+                                        <asp:TextBox ID="ngay_nhan" runat="server" CssClass="form-control text-input" TextMode="Date" Text="<% =Date() %>"></asp:TextBox>
                                     </td>
                                     <td style="padding-left:10px !important;">Loại thiết bị <span>*</span></td>
                                     <td>

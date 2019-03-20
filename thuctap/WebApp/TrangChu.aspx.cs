@@ -14,9 +14,16 @@ namespace WebApp
         Class1 db = new Class1();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //hienthi();
+            hienthi();
         }
 
+        public void hienthi()
+        {
+            String sql = "select * from notification";
+            DataView dv = new DataView(db.bindDataTable(sql));
+            rptNoti.DataSource = dv;
+            rptNoti.DataBind();
+        }
        
         protected void btnChange_Click(object sender, EventArgs e)
         {

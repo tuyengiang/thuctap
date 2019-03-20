@@ -408,3 +408,15 @@ tr#MainContent_example td:nth-child(8) {
     font-weight: 700;
     font-family: "Roboto",sans-serif;
 }
+.content li {
+    height: 40px;
+    list-style: none;
+    line-height: 40px;
+    border-bottom: 1px dashed #ddd;
+}
+.content li:before {
+    content: "\f0da";
+    padding-right: 5px;
+    font-family: fontawesome;
+    color: #ff3333;
+}

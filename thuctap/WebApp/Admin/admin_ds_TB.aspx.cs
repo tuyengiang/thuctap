@@ -29,7 +29,6 @@ namespace WebApp.Admin
                 loadTb_edit();
                 loaddv_edit();
                 loadTB();
-                txt_ngay_nhan_edit.Text = DateTime.Now.ToString();
             }
         }
         public void hienthi()

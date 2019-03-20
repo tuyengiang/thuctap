@@ -19,63 +19,28 @@
               </div>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Trangchu.aspx" aria-expanded="false" >
-              <i class="menu-icon mdi mdi-television"></i>
-              <span class="menu-title">Bảng tin</span>
-            </a>
-            </li>
-             <li class="nav-item">
-                <a class="nav-link" href="/Admin/admin_notification.aspx" aria-expanded="false" aria-controls="ui-post">
-                  <i class="menu-icon fa fa-thumb-tack"></i>
-                  <span class="menu-title">Quản lý thông báo</span>
-                </a>
-            </li>
-           <li class="nav-item">
-            <a class="nav-link" href="/Admin/admin_ds_TB.aspx" aria-expanded="false" >
-              <i class="menu-icon fa fa-laptop"></i>
-              <span class="menu-title">Quản lý thiết bị</span>
-            </a>
-            </li>
-           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon fa fa-bars"></i>
-              <span class="menu-title">Quản lý danh mục</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="/admin_ds_don_vi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục đơn vị</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/Admin/admin_ds_nhatram.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục nhà trạm</a>
-                </li>
-                 <li class="nav-item">
-                  <a class="nav-link" href="/Admin/admin_loai_thietbi.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh mục loại thiết bị</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-user">
-              <i class="menu-icon fa fa-cog"></i>
-              <span class="menu-title">Quản lý người dùng</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-user">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="/Admin/admin_profile.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Thông tin tài khoản</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Nhóm phân quyền</a>
-                </li>
-                 <li class="nav-item">
-                  <a class="nav-link" href="/Admin/admin_add_Account.aspx"><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> Danh sách tài khoản</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+            
+            <asp:Repeater ID="rptMenu" runat="server" onitemdatabound="rptMenu_ItemDataBound"> 
+                 <ItemTemplate>  
+                        <li class="nav-item">
+                            <a class="nav-link"  data-toggle='<%#Eval("toggle") %>' href='<%#Eval("link") %>' aria-expanded="false">
+                              <i class="menu-icon <%#Eval("icon") %>"></i>
+                              <span class="menu-title"><%#Eval("name") %></span>
+                               <i class="<%#Eval("icon_angle") %>"></i>
+                            </a>
+                            <div class="collapse" id="<%#Eval("toggle_id") %>">
+                                  <ul class="nav flex-column sub-menu">
+                                       <asp:Repeater ID="rpt_Sub" runat="server">
+                                            <ItemTemplate>
+                                                <li class="nav-item">
+                                                  <a class="nav-link" href='<%#Eval("link") %>'><i class="fa fa-circle-o" style="padding-right:5px;font-size:9px;"></i> <%#Eval("name") %></a>
+                                                </li>
+                                           </ItemTemplate>
+                                       </asp:Repeater>
+                                  </ul>
+                            </div>
+                        </li> 
+                 </ItemTemplate>
+             </asp:Repeater>
         </ul>
       </nav>

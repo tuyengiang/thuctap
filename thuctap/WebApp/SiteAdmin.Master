@@ -59,12 +59,12 @@
             $('#myMoView').modal('show');
       }
      function openModalKP() {
-                $('#myMoKP').modal({ backdrop: 'static', keyboard: false })
-                $('#myMoKP').modal('show');
+            $('#myMoKP').modal({ backdrop: 'static', keyboard: false })
+            $('#myMoKP').modal('show');
       }
       function openModalUN() {
-                $('#myMoUN').modal({ backdrop: 'static', keyboard: false })
-                $('#myMoUN').modal('show');
+            $('#myMoUN').modal({ backdrop: 'static', keyboard: false })
+            $('#myMoUN').modal('show');
       }
       var loadFile = function(event) {
             var output = document.getElementById('output');
@@ -87,7 +87,7 @@
       <!-- model-main -->
       <div class="main-panel">
         <div class="content-wrapper">
-             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+              <asp:ContentPlaceHolder ID="MainContent" runat="server">
 
               </asp:ContentPlaceHolder>
          

@@ -30,11 +30,42 @@ namespace WebApp.usercontrol
                 }
                 username.Text = name;
                 avatar_user.ImageUrl = avatar;
+                getMenu();
             }
             else
             {
                 Response.Redirect("~/DangNhap.aspx");
             }
         }
+
+        public void getMenu()
+        {
+            String sql = "SELECT * FROM menu where id_Menu=0";
+            DataView dv = new DataView(db.bindDataTable(sql));
+            rptMenu.DataSource = dv;
+            rptMenu.DataBind();
+        }
+
+
+       
+
+        protected void rptMenu_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            DataRowView dv = e.Item.DataItem as DataRowView;
+            if (dv != null)
+            {
+                Repeater rpt_sub = e.Item.FindControl("rpt_Sub") as Repeater;
+                int id_menu = (int)dv.Row["ID"];
+                string sql = "SELECT * FROM menu WHERE id_Menu='" + id_menu+ "'";
+                DataView dt = new DataView(db.bindDataTable(sql));
+                rpt_sub.DataSource = dt;
+                rpt_sub.DataBind();
+
+            }
+        }
+
+        
+
+
     }
 }

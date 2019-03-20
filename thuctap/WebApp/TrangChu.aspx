@@ -20,7 +20,7 @@
                         <div class="content">
                             <asp:Repeater ID="rptNoti" runat="server"> 
                                     <ItemTemplate>  
-                                        
+                                        <li><%#Eval("title") %></li>
                                     </ItemTemplate>
                             </asp:Repeater>
                         </div>
