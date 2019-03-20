@@ -91,12 +91,22 @@ namespace WebApp.Admin
         }
         private void loadDropdown()
         {
-            
-                    String sql = "Select * from nha_tram";
-                    id_tram_edit.DataSource = db.bindDataTable(sql);
-                    id_tram_edit.DataTextField = "ten_tram";
-                    id_tram_edit.DataValueField = "id_tram";
-                    id_tram_edit.DataBind();
+            if (Session["username"] != null)
+            {
+                String u= "Select id_donvi from Account where name_user='" + Session["username"].ToString() + "'";
+
+                foreach (DataRow dt in db.bindDataTable(u).Rows)
+                {
+                    int ma = Convert.ToInt32(dt["id_donvi"].ToString());
+                    txt_matb.Text = ma.ToString();
+                    String sql = "Select ten_tram,id_tram from nha_tram where id_donvi='" + ma + "' and status=1";
+                    id_tram.DataSource = db.bindDataTable(sql);
+                    id_tram.DataTextField = "ten_tram";
+                    id_tram.DataValueField = "id_tram";
+                    id_tram.DataBind();
+                }
+            }
+
                
         }
         private void loadTB()
@@ -125,12 +135,22 @@ namespace WebApp.Admin
         }
         private void loadDropdown_edit()
         {
-                    String sql = "Select * from nha_tram";
+            if (Session["username"] != null)
+            {
+                String u = "Select id_donvi from Account where name_user='" + Session["username"].ToString() + "'";
+
+                foreach (DataRow dt in db.bindDataTable(u).Rows)
+                {
+                    int ma = Convert.ToInt32(dt["id_donvi"].ToString());
+                    txt_matb.Text = ma.ToString();
+                    String sql = "Select ten_tram,id_tram from nha_tram where id_donvi='" + ma + "' and status=1";
                     id_tram_edit.DataSource = db.bindDataTable(sql);
                     id_tram_edit.DataTextField = "ten_tram";
                     id_tram_edit.DataValueField = "id_tram";
                     id_tram_edit.DataBind();
-                
+                }
+            }
+
         }
         private void loadTb_edit()
         {

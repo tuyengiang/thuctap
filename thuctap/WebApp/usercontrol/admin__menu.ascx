@@ -32,7 +32,7 @@
                 </a>
             </li>
            <li class="nav-item">
-            <a class="nav-link"  href="/Admin/admin_ds_TB.aspx" aria-expanded="false" >
+            <a class="nav-link" href="/Admin/admin_ds_TB.aspx" aria-expanded="false" >
               <i class="menu-icon fa fa-laptop"></i>
               <span class="menu-title">Quản lý thiết bị</span>
             </a>

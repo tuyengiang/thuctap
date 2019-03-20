@@ -120,7 +120,7 @@ namespace WebApp.Admin
                 LinkButton btnKhoiPhuc = (LinkButton)e.Row.FindControl("btnRecycle");
                 LinkButton btnkhoa = (LinkButton)e.Row.FindControl("btnKhoa");
                 LinkButton btnunlock = (LinkButton)e.Row.FindControl("btnunlock");
-
+                
                 string xoatk = DataBinder.Eval(e.Row.DataItem, "xoatk").ToString();
 
                 if(xoatk == "True")
@@ -237,7 +237,7 @@ namespace WebApp.Admin
 
         protected void searchDV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper AND Account.id_donvi='" + searchDV.SelectedValue.ToString()+"' ";
+            String sql = "SELECT Account.*, don_vi.ten_donvi,group_user.name_super,case khoatk when 'False' then N'Mở khóa' when 'True' then N'Đang khóa' end as khoa,case xoatk when 'False' then N'Hoạt động' when 'True' then N'Không hoạt động' end as xoa,case gioitinh when 'False' then N'Nữ' when 'True' then N'Nam' end as gioitinhA FROM Account,don_vi,group_user Where Account.id_donvi=don_vi.id_donvi AND Account.id_supper=group_user.id_supper AND Account.id_donvi='" + searchDV.SelectedValue.ToString()+"' ";
             DataView dv = new DataView(db.bindDataTable(sql));
             example.DataSource = dv;
             example.DataBind();

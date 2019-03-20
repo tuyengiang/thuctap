@@ -76,6 +76,7 @@
     <Content Include="Admin\admin_ds_remove_account.aspx" />
     <Content Include="Admin\admin_ds_TB.aspx" />
     <Content Include="Admin\admin_loai_thietbi.aspx" />
+    <Content Include="Admin\admin_logout.aspx" />
     <Content Include="Admin\admin_notification.aspx" />
     <Content Include="Admin\admin_profile.aspx" />
     <Content Include="admin_ds_don_vi.aspx" />
@@ -3756,6 +3757,13 @@
     </Compile>
     <Compile Include="Admin\admin_loai_thietbi.aspx.designer.cs">
       <DependentUpon>admin_loai_thietbi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_logout.aspx.cs">
+      <DependentUpon>admin_logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_logout.aspx.designer.cs">
+      <DependentUpon>admin_logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\admin_notification.aspx.cs">
       <DependentUpon>admin_notification.aspx</DependentUpon>

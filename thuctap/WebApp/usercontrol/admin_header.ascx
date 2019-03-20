@@ -90,13 +90,13 @@
                 </div>
               </a>
               <a href="/Admin/admin_profile.aspx" class="dropdown-item mt-2">
-               Thông tin tài khoản
+               <i class="fa fa-user"></i> Thông tin tài khoản
               </a>
               <a class="dropdown-item">
-                Đổi mật khẩu
+                <i class="fa fa-lock"></i>Đổi mật khẩu
               </a>
-              <a class="dropdown-item">
-                    Đăng xuất
+              <a class="dropdown-item" href="../Admin/admin_logout.aspx">
+                    <i class="fa fa-sign-in"></i> Đăng xuất
               </a>
             </div>
           </li>
