@@ -77,7 +77,9 @@
     <Content Include="Admin\admin_ds_TB.aspx" />
     <Content Include="Admin\admin_loai_thietbi.aspx" />
     <Content Include="Admin\admin_logout.aspx" />
+    <Content Include="Admin\admin_menu.aspx" />
     <Content Include="Admin\admin_notification.aspx" />
+    <Content Include="Admin\admin_phan_quyen.aspx" />
     <Content Include="Admin\admin_profile.aspx" />
     <Content Include="admin_ds_don_vi.aspx" />
     <Content Include="ckeditor\.htaccess" />
@@ -3765,12 +3767,26 @@
     <Compile Include="Admin\admin_logout.aspx.designer.cs">
       <DependentUpon>admin_logout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\admin_menu.aspx.cs">
+      <DependentUpon>admin_menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_menu.aspx.designer.cs">
+      <DependentUpon>admin_menu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\admin_notification.aspx.cs">
       <DependentUpon>admin_notification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\admin_notification.aspx.designer.cs">
       <DependentUpon>admin_notification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\admin_phan_quyen.aspx.cs">
+      <DependentUpon>admin_phan_quyen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\admin_phan_quyen.aspx.designer.cs">
+      <DependentUpon>admin_phan_quyen.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\admin_profile.aspx.cs">
       <DependentUpon>admin_profile.aspx</DependentUpon>
@@ -3796,6 +3812,7 @@
     <Compile Include="BUS\BUS_AD.cs" />
     <Compile Include="BUS\BUS_DV.cs" />
     <Compile Include="BUS\BUS_LTB.cs" />
+    <Compile Include="BUS\BUS_MENU.cs" />
     <Compile Include="BUS\BUS_ThietB.cs" />
     <Compile Include="BUS\BUS_TRAM.cs" />
     <Compile Include="BUS\BUS_NO.cs" />
@@ -3803,6 +3820,7 @@
     <Compile Include="DAL\DAL_AD.cs" />
     <Compile Include="DAL\DAL_DV.cs" />
     <Compile Include="DAL\DAL_LTB.cs" />
+    <Compile Include="DAL\DAL_MENU.cs" />
     <Compile Include="DAL\DAL_NO.cs" />
     <Compile Include="DAL\DAL_ThietB.cs" />
     <Compile Include="DAL\DAL_TRAM.cs" />
@@ -3816,6 +3834,7 @@
     <Compile Include="DTO\DTO_AD.cs" />
     <Compile Include="DTO\DTO_DV.cs" />
     <Compile Include="DTO\DTO_LTB.cs" />
+    <Compile Include="DTO\DTO_MENU.cs" />
     <Compile Include="DTO\DTO_NO.cs" />
     <Compile Include="DTO\DTO_ThietB.cs" />
     <Compile Include="DTO\DTO_TRAM.cs" />
