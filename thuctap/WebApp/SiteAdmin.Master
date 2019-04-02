@@ -21,7 +21,7 @@
    <link href="https://oss.maxcdn.com/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../css/admin/table/dataTables.bootstrap.min.css">
   <link rel="shortcut icon" href="../css/admin/images/favicon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.css" />
+  <link rel="stylesheet" href="../css/admin/css/notify.css" />
     <!-- plugins:js -->
   <script src="../css/jquery.js"></script>
   <script src="../css/bootstrap.min.js"></script>
@@ -34,7 +34,7 @@
   <script src="../css/admin/vendors/js/vendor.bundle.addons.js"></script>
   <script type="text/javascript" src="../css/admin/table/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="../css/admin/table/dataTables.bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+  <script src="../css/admin/js/notify.min.js"></script>
    <script type="text/javascript" src="../css/angular.min.js"></script>
   <script src="../css/main.js"></script>
   <script type="text/javascript">
